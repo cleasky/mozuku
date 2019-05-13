@@ -49,7 +49,7 @@ export default () => {
     reader.onloadend = () => {
       if (reader.result != null) {
         const blob = new Blob([new Uint8Array(reader.result)])
-        Ahdin.compress(blob).then(comp => {
+        Ahdin.compress(blob, { outputFormat: 'png' }).then(comp => {
           const compressed = new File([comp], file.name)
           const form = new FormData()
           form.append('file', compressed)
