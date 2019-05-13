@@ -90,7 +90,20 @@ export default ({ post }: { post: Post }) => {
             {p.type === BODYPART_TYPE_LINK_IMAGE && (
               <a href={p.payload} target="_blank" rel="noreferrer">
                 <div className="post-image__img">
-                  <img src={p.payload} />
+                  <img
+                    src={p.payload}
+                    style={{
+                      transform: `translate(${zoom ? moveX : '0'}%, ${
+                        zoom ? moveY : '0'
+                      }%) scale(${zoom ? '2' : '1'})`
+                    }}
+                    onClick={e => {
+                      setZoom(false)
+                      window.open(e.currentTarget.currentSrc, '_blank')
+                    }}
+                    onMouseLeave={() => setZoom(false)}
+                    onMouseMove={e => setXY(e)}
+                  />
                 </div>
               </a>
             )}
@@ -102,7 +115,7 @@ export default ({ post }: { post: Post }) => {
               <picture>
                 {file.variants
                   .filter(variant => variant.type == 'image')
-                  .sort((a,b) => b.score - a.score)
+                  .sort((a, b) => b.score - a.score)
                   .map(variant => (
                     <source
                       key={variant.id}
