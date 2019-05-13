@@ -80,8 +80,11 @@ export default ({ post, enableMeta }: { post: Post; enableMeta: boolean }) => (
                 )[0]
                 const imopen = im.variants
                   .filter(vr => vr.mime == src.mime)
-                  .sort(vr => vr.score)[0]
-                window.open(imopen.url, '_blank')
+                  .sort(vr => vr.score)
+                window.open(
+                  imopen.length ? imopen[0].url : e.currentTarget.currentSrc,
+                  '_blank'
+                )
               }}
             />
           </picture>
