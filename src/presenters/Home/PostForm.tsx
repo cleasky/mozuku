@@ -78,21 +78,36 @@ export default forwardRef<HTMLTextAreaElement, T>(
             Post
           </button>
         </form>
-        {emojiP ? (
-          <>
-            <Picker
-              set="twitter"
-              native={true}
-              title=""
-              onClick={(emj: any) => {
-                setDraft(`${draft}${emj.native}`)
-              }}
-            />
-          </>
-        ) : (
-          <></>
-        )}
+
         <div className="postForm__images-area">
+          <label
+            onClick={() => {
+              setEmojiP(!emojiP)
+            }}
+            className="postForm__images-area__form__label"
+          >
+            <Twemoji>😄</Twemoji>
+          </label>
+          {emojiP ? (
+            <>
+              <Picker
+                set="twitter"
+                native={true}
+                title=""
+                onClick={(emj: any) => {
+                  setDraft(`${draft}${emj.native}`)
+                }}
+              />
+              <div
+                className="emoji-mart__wrap"
+                onClick={() => {
+                  setEmojiP(false)
+                }}
+              />
+            </>
+          ) : (
+            <></>
+          )}
           <form>
             <label
               className="postForm__images-area__form__label"
@@ -137,16 +152,6 @@ export default forwardRef<HTMLTextAreaElement, T>(
               </picture>
             ))}
           </div>
-          <Twemoji>
-            <span
-              className="postForm__emojiP"
-              onClick={() => {
-                setEmojiP(!emojiP)
-              }}
-            >
-              😄
-            </span>
-          </Twemoji>
         </div>
         <div className="postForm__post-setting__area">
           <label>
