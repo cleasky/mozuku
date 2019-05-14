@@ -183,7 +183,11 @@ class TimelineStore {
           content: $.optional.obj({})
         }).throw(JSON.parse(ev.data))
         if (m.type == 'message') {
-          postSound.play()
+          try {
+            postSound.play()
+          } catch (error) {
+            console.error(error)
+          }
         }
         if (m.type === 'success') return
         if (m.type === 'error') throw new Error(m.message)
