@@ -140,6 +140,19 @@ select {
   image-orientation: from-image;
 }
 
+.postForm__images-area__collection__button {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  right: 12px;
+  top: 3px;
+  color: #fff;
+  background-color: var(--color-main);
+  border-radius: 50px;
+  text-align: center;
+}
+
 .postForm__images-area__form__input {
   display: none;
 }
@@ -334,6 +347,16 @@ select {
   background-color: var(--color-main);
   color: #fff;
   font-size: 0.8em;
+}
+
+.settingsItem__label {
+  vertical-align: middle;
+}
+
+.checkbox {
+  margin: 6px;
+  -webkit-appearance: checkbox;
+  appearance: checkbox;
 }
 
 .nameForm {

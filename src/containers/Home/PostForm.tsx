@@ -45,30 +45,42 @@ export default () => {
   }
   const fileUploader = (file: File) => {
     setIsUploading(true)
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      if (reader.result != null) {
-        const blob = new Blob([new Uint8Array(reader.result)])
-        Ahdin.compress(blob, { outputFormat: 'png' }).then(comp => {
-          const compressed = new File([comp], file.name)
-          const form = new FormData()
-          form.append('file', compressed)
-          form.append('name', compressed.name)
-          form.append('ifNameConflicted', 'add-date-string')
-          seaClient
-            .post('/v1/album/files', form)
-            .then(file => {
-              setImages(images => [...images, file])
-              setIsUploading(false)
-            })
-            .catch(err => {
-              console.error(err)
-              setIsUploading(false)
-            })
-        })
+    new Promise((resolve, reject) => {
+      if (Config.image_compression) {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          if (reader.result != null) {
+            const blob = new Blob([new Uint8Array(reader.result)])
+            Ahdin.compress(blob)
+              .then(comp => {
+                resolve(new File([comp], file.name))
+              })
+              .catch(err => {
+                console.error(err)
+                resolve(file)
+              })
+          }
+        }
+        reader.readAsArrayBuffer(file)
+      } else {
+        resolve(file)
       }
-    }
-    reader.readAsArrayBuffer(file)
+    }).then(uploadTarget => {
+      const form = new FormData()
+      form.append('file', uploadTarget)
+      form.append('name', uploadTarget.name)
+      form.append('ifNameConflicted', 'add-date-string')
+      seaClient
+        .post('/v1/album/files', form)
+        .then(file => {
+          setImages(images => [...images, file])
+          setIsUploading(false)
+        })
+        .catch(err => {
+          console.error(err)
+          setIsUploading(false)
+        })
+    })
   }
   const submitAlbum = async (event: React.ClipboardEvent) => {
     if (event.clipboardData.getData('Text').includes('https://gyazo.com')) {
@@ -96,6 +108,9 @@ export default () => {
       Array.from(event.target.files).forEach(file => fileUploader(file))
     }
   }
+  const cancelFileFromImagees = (fileId: number) => {
+    setImages(images.filter(image => image.id != fileId))
+  }
 
   return (
     <PostForm
@@ -108,6 +123,7 @@ export default () => {
       submitAlbumFromFile={submitAlbumFromFile}
       images={images}
       isUploding={isUploading}
+      cancelFileFromImages={cancelFileFromImagees}
     />
   )
 }

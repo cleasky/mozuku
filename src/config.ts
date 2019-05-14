@@ -18,5 +18,10 @@ export default {
     : null,
   commit: process.env.COMMIT_REF
     ? `${process.env.BRANCH}@${process.env.COMMIT_REF}`
-    : null
+    : null,
+  image_compression:
+    JSON.parse(
+      localStorage.getItem('Mozukusu::AppPreference::ImageCompression') ||
+        'false'
+    ) || false
 }

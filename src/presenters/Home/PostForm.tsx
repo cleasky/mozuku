@@ -11,6 +11,7 @@ type T = {
   submitAlbumFromFile: (e: React.ChangeEvent<HTMLInputElement>) => void
   images: AlbumFile[]
   isUploding: boolean
+  cancelFileFromImages: (fileId: number) => void
 }
 export default forwardRef<HTMLTextAreaElement, T>(
   (
@@ -22,7 +23,8 @@ export default forwardRef<HTMLTextAreaElement, T>(
       submitAlbum,
       submitAlbumFromFile,
       images,
-      isUploding
+      isUploding,
+      cancelFileFromImages
     },
     ref
   ) => {
@@ -40,6 +42,9 @@ export default forwardRef<HTMLTextAreaElement, T>(
     }
     const onPaste = (event: React.ClipboardEvent) => {
       submitAlbum(event)
+    }
+    const onFileCancel = (fileId: number) => {
+      cancelFileFromImages(fileId)
     }
     const onFileSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault()
@@ -102,6 +107,12 @@ export default forwardRef<HTMLTextAreaElement, T>(
                     />
                   ))}
                 <img title={image.name} />
+                <div
+                  onClick={() => cancelFileFromImages(image.id)}
+                  className="postForm__images-area__collection__button"
+                >
+                  x
+                </div>
               </picture>
             ))}
           </div>

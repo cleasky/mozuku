@@ -29,8 +29,27 @@ export default ({
       <button className="settingsItem__logout" onClick={onClickLogout}>
         Logout
       </button>
-      <div className="settingsItem__title">About</div>
-      mozuku info
+      <div className="settingsItem__title">Client</div>
+      <div className="settingsItem__subtitle">Settings</div>
+      <form>
+        <label className="settingsItem__label" htmlFor="toggle_image_compress">
+          <input
+            name="toggle_image_compress"
+            type="checkbox"
+            className="checkbox"
+            defaultChecked={Config.image_compression}
+            onChange={() => {
+              Config.image_compression = !Config.image_compression
+              localStorage.setItem(
+                'Mozukusu::AppPreference::ImageCompression',
+                JSON.stringify(Config.image_compression)
+              )
+            }}
+          />
+          画像を圧縮する
+        </label>
+      </form>
+      <div className="settingsItem__subtitle">Info</div>
       <ul>
         <li>
           API:{' '}
