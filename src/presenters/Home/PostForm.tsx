@@ -1,5 +1,7 @@
 import * as React from 'react'
 const { forwardRef, useState } = React
+import Twemoji from 'react-twemoji'
+import EmojiPicker from 'emojione-picker'
 import { AlbumFile } from '../../models/post'
 
 import Config from '../../config'
@@ -51,20 +53,27 @@ export default forwardRef<HTMLTextAreaElement, T>(
       e.preventDefault()
       submitAlbumFromFile(e)
     }
+    const setEmoji = (s: string) => {
+      setDraft(`${draft}${s}`)
+      setEmojiP(false)
+    }
+    const [emojiP, setEmojiP] = useState(false)
 
     return (
       <>
         <form className="postForm" onSubmit={onSubmit}>
-          <textarea
-            className="postForm__textarea"
-            disabled={draftDisabled}
-            onKeyDown={onKeyDown}
-            onChange={onChange}
-            onPaste={onPaste}
-            ref={ref}
-            placeholder="What's up?"
-            value={draft}
-          />
+          <Twemoji>
+            <textarea
+              className="postForm__textarea"
+              disabled={draftDisabled}
+              onKeyDown={onKeyDown}
+              onChange={onChange}
+              onPaste={onPaste}
+              ref={ref}
+              placeholder="What's up?"
+              value={draft}
+            />
+          </Twemoji>
           <button
             className="postForm__button"
             type="submit"
@@ -73,19 +82,32 @@ export default forwardRef<HTMLTextAreaElement, T>(
             Post
           </button>
         </form>
+        {emojiP ? (
+          <Twemoji>
+            <EmojiPicker
+              onChange={(e: any) =>
+                setEmoji(String.fromCodePoint(parseInt(e.unicode, 16)))
+              }
+            />
+          </Twemoji>
+        ) : (
+          <></>
+        )}
         <div className="postForm__images-area">
           <form>
             <label
               className="postForm__images-area__form__label"
               htmlFor="fileupload"
             >
-              {isUploding ? (
-                <span className="postForm__images-area__form__label_loading">
-                  🤔
-                </span>
-              ) : (
-                '+'
-              )}
+              <Twemoji>
+                {isUploding ? (
+                  <span className="postForm__images-area__form__label_loading">
+                    🤔
+                  </span>
+                ) : (
+                  '+'
+                )}
+              </Twemoji>
               <input
                 type="file"
                 id="fileupload"
@@ -116,6 +138,16 @@ export default forwardRef<HTMLTextAreaElement, T>(
               </picture>
             ))}
           </div>
+          <Twemoji>
+            <span
+              className="postForm__emojiP"
+              onClick={() => {
+                setEmojiP(!emojiP)
+              }}
+            >
+              😄
+            </span>
+          </Twemoji>
         </div>
         <div className="postForm__post-setting__area">
           <label>

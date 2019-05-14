@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { Switch, Route } from 'react-router'
 import { Link } from 'react-router-dom'
+import Twemoji from 'react-twemoji'
 
 import { Account } from '../models'
 
@@ -32,9 +33,11 @@ export default ({ me }: { me?: Account }) => {
             )}
           </div>
           <div>
-            <Link to={{ pathname: '/settings' }}>
-              <button>⚙</button>
-            </Link>
+            <Twemoji>
+              <Link to={{ pathname: '/settings' }}>
+                <button>⚙</button>
+              </Link>
+            </Twemoji>
           </div>
         </div>
       </div>

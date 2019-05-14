@@ -1,5 +1,6 @@
 @import '../node_modules/sanitize.css/sanitize.css';
 @import '../node_modules/placeholder-loading/src/scss/placeholder-loading';
+@import '../node_modules/emojione-picker/css/picker.css';
 
 :root {
   --color-base: rgb(223, 244, 250);
@@ -125,6 +126,16 @@ select {
   color: #fff;
   font-size: 0.8em;
   transform: translateY(-50%);
+}
+
+.postForm__emojiP {
+  position: absolute;
+  font-size: 2em;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 30%;
+  right: 24px;
 }
 
 .postForm__images-area {
@@ -408,4 +419,24 @@ select {
   color: #fff;
   font-size: 0.8em;
   transform: translateY(-50%);
+}
+
+img.emoji {
+  height: 1em;
+  width: 1em;
+  vertical-align: -0.1em;
+  margin: 0 .05em 0 .1em;
+}
+
+.emoji-dialog {
+  position: absolute;
+  z-index: 100;
+}
+
+.emojione {
+  width: 1em;
+}
+
+.emoji-row {
+  text-align: center;
 }

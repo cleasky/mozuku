@@ -10,6 +10,7 @@ import app from './app'
 import seaClient from '../util/seaClient'
 
 import postSoundFile from '../static/post.mp3'
+import config from '../config'
 
 class TimelineStore {
   @observable ids: number[] = []
@@ -182,7 +183,7 @@ class TimelineStore {
           message: $.optional.str,
           content: $.optional.obj({})
         }).throw(JSON.parse(ev.data))
-        if (m.type == 'message') {
+        if (m.type == 'message' && config.post_sound) {
           try {
             postSound.play()
           } catch (error) {

@@ -34,6 +34,24 @@ export default ({
       <form>
         <label className="settingsItem__label">
           <input
+            name="toggle_post_sound"
+            type="checkbox"
+            className="checkbox"
+            defaultChecked={Config.post_sound}
+            onChange={() => {
+              Config.post_sound = !Config.post_sound
+              localStorage.setItem(
+                'Mozukusu::AppPreference::PostSound',
+                JSON.stringify(Config.post_sound)
+              )
+            }}
+          />
+          音を鳴らす
+        </label>
+      </form>
+      <form>
+        <label className="settingsItem__label">
+          <input
             name="toggle_image_compress"
             type="checkbox"
             className="checkbox"

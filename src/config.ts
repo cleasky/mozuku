@@ -19,6 +19,10 @@ export default {
   commit: process.env.COMMIT_REF
     ? `${process.env.BRANCH}@${process.env.COMMIT_REF}`
     : null,
+  post_sound:
+    JSON.parse(
+      localStorage.getItem('Mozukusu::AppPreference::PostSound') || 'false'
+    ) || false,
   image_maxsize:
     JSON.parse(
       localStorage.getItem('Mozukusu::AppPreference::ImageMaxsize') || '1000000'
