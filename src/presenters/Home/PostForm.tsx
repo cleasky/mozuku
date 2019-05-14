@@ -36,6 +36,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
   ) => {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
+      setEmojiP(false)
       submitDraft()
     }
     const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
