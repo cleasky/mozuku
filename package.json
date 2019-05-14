@@ -17,6 +17,7 @@
     "moment-timezone": "^0.5.25",
     "parcel": "^1.12.3",
     "pictograph": "^2.2.0",
+    "placeholder-loading": "^0.2.1",
     "prettier": "^1.17.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
