@@ -4,7 +4,13 @@ const { useState } = React
 import config from '../config'
 import { AlbumFile } from '../models/post'
 
-export default ({ file }: { file: AlbumFile }) => {
+export default ({
+  file,
+  setOpenModal
+}: {
+  file: AlbumFile
+  setOpenModal: (s: string | null) => void
+}) => {
   const [moveX, setMoveX] = useState(0)
   const [moveY, setMoveY] = useState(0)
   const [zoom, setZoom] = useState(false)
@@ -54,10 +60,7 @@ export default ({ file }: { file: AlbumFile }) => {
           const imex = file.variants.filter(
             variant => variant.mime == mime && variant.type == 'image'
           )
-          window.open(
-            imex.length ? imex[0].url : e.currentTarget.currentSrc,
-            '_blank'
-          )
+          setOpenModal(imex.length ? imex[0].url : e.currentTarget.currentSrc)
         }}
         onMouseLeave={() => setZoom(false)}
         onMouseMove={e => setXY(e)}

@@ -1,4 +1,5 @@
 import * as React from 'react'
+const { useState } = React
 import Twemoji from 'react-twemoji'
 import moment from 'moment-timezone'
 
@@ -15,6 +16,8 @@ import {
 } from '../models'
 
 export default ({ post }: { post: Post }) => {
+  const [openModal, setOpenModal] = useState(null as string | null)
+
   return (
     <Twemoji
       options={{
@@ -108,11 +111,21 @@ export default ({ post }: { post: Post }) => {
           {post.files.map(file => (
             <React.Fragment key={file.id}>
               <div className="post-image__img">
-                <Picture file={file} />
+                <Picture file={file} setOpenModal={setOpenModal} />
               </div>
             </React.Fragment>
           ))}
         </div>
+        {openModal && (
+          <div className="post-image__modal" onClick={() => setOpenModal(null)}>
+            <img
+              src={openModal}
+              onClick={() => {
+                window.open(openModal, '_blank')
+              }}
+            />
+          </div>
+        )}
       </div>
     </Twemoji>
   )
