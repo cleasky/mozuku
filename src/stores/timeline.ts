@@ -9,7 +9,7 @@ import app from './app'
 
 import seaClient from '../util/seaClient'
 
-import postSoundFile from '../static/post.mp3'
+import postSoundFile from '../static/cork-plug2.mp3'
 import config from '../config'
 
 class TimelineStore {
