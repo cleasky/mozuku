@@ -4407,6 +4407,11 @@ react-dom@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
+react-identicons@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/react-identicons/-/react-identicons-1.1.7.tgz#8dc8dc98fe3179874d481584cf99e1b3de8264f9"
+  integrity sha512-r+nCigLoQMffpf8gZo6l0we8RaRkgEIeRY6xS1vjp5ANxdTd3QwA2tjBTfmgf+4kFqYnaL2XvJH+iZ4mKqnb8Q==
+
 react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
