@@ -28,15 +28,18 @@ export default ({ link }: { link: string }) => {
           <a href={link} target="_blank" rel="noreferrer">
             <div className="post__ogp__info">
               <div className="post__ogp__info__title">{ogp.title}</div>
-              <div className="post__ogp__info__link">{link}</div>
+
               {ogp.description && (
                 <div className="post__ogp__info__description">
                   {ogp.description}
                 </div>
               )}
               {ogp.site_name && (
-                <div className="post__ogp__info__author">{ogp.site_name}</div>
+                <span className="post__ogp__info__author">
+                  {ogp.site_name} ･{' '}
+                </span>
               )}
+              <span className="post__ogp__info__link">{link}</span>
             </div>
           </a>
         </div>

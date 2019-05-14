@@ -315,12 +315,18 @@ select {
 
 .post__ogp a {
   text-decoration: none;
-  padding: 6px;
+  padding: 6px 0;
+}
+
+.post__ogp__info {
+  width: max-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .post__ogp__img {
   height: 72px;
-  margin: 0 6px 0 0;
+  padding: 0 12px 0 0;
 }
 
 .post__ogp__info__title {
@@ -332,16 +338,15 @@ select {
 }
 
 .post__ogp__info__link {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-size: 0.9em;
+  font-size: 0.8em;
+  margin: 0 2px;
 }
 
 .post__ogp__info__description {
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  white-space: pre;
+  font-size: 0.8em;
+  margin: 6px 0;
   color: var(--color-text);
 }
 
