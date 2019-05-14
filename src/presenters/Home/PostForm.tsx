@@ -62,7 +62,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
             onChange={onChange}
             onPaste={onPaste}
             ref={ref}
-            placeholder="What's up Otaku?"
+            placeholder="What's up?"
             value={draft}
           />
           <button
@@ -70,7 +70,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
             type="submit"
             disabled={draftDisabled}
           >
-            Send to Sea
+            Post
           </button>
         </form>
         <div className="postForm__images-area">

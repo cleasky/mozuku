@@ -24,9 +24,7 @@ export default ({ me }: { me?: Account }) => {
           </h1>
           <div>
             {me ? (
-              <>
-                {me.name} (@{me.screenName})
-              </>
+              <>@{me.screenName}</>
             ) : (
               <span>
                 <i>[誰?]</i>

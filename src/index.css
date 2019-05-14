@@ -119,7 +119,7 @@ select {
   position: absolute;
   top: 50%;
   right: 24px;
-  width: 120px;
+  width: 100px;
   height: 36px;
   background-color: var(--color-main);
   color: #fff;
