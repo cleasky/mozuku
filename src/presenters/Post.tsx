@@ -1,8 +1,8 @@
 import * as React from 'react'
 import moment from 'moment-timezone'
-const { useState } = React
 
 import OGP from './OGP'
+import Picture from './Picture'
 
 import {
   Post,
@@ -10,27 +10,8 @@ import {
   BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_BOLD
 } from '../models'
-import config from '../config'
 
 export default ({ post }: { post: Post }) => {
-  const [moveX, setMoveX] = useState(0)
-  const [moveY, setMoveY] = useState(0)
-  const [zoom, setZoom] = useState(false)
-  const setXY = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
-    setZoom(true)
-    setMoveX(
-      100 -
-        ((e.clientX - e.currentTarget.offsetLeft + e.currentTarget.width / 2) /
-          e.currentTarget.width) *
-          100
-    )
-    setMoveY(
-      100 -
-        ((e.pageY - e.currentTarget.offsetTop + e.currentTarget.height / 2) /
-          e.currentTarget.height) *
-          100
-    )
-  }
   return (
     <div className="post">
       <div className="post__head post-head">
@@ -91,20 +72,7 @@ export default ({ post }: { post: Post }) => {
             {p.type === BODYPART_TYPE_LINK_IMAGE && (
               <a href={p.payload} target="_blank" rel="noreferrer">
                 <div className="post-image__img">
-                  <img
-                    src={p.payload}
-                    style={{
-                      transform: `translate(${zoom ? moveX : '0'}%, ${
-                        zoom ? moveY : '0'
-                      }%) scale(${zoom ? '2' : '1'})`
-                    }}
-                    onClick={e => {
-                      setZoom(false)
-                      window.open(e.currentTarget.currentSrc, '_blank')
-                    }}
-                    onMouseLeave={() => setZoom(false)}
-                    onMouseMove={e => setXY(e)}
-                  />
+                  <img src={p.payload} />
                 </div>
               </a>
             )}
@@ -113,48 +81,7 @@ export default ({ post }: { post: Post }) => {
         {post.files.map(file => (
           <React.Fragment key={file.id}>
             <div className="post-image__img">
-              <picture>
-                {file.variants
-                  .filter(variant => variant.size <= config.image_maxsize)
-                  .filter((variant, index, vrs) => {
-                    if (vrs.filter(vr => vr.type == 'image').length) {
-                      return variant.type == 'image'
-                    } else {
-                      return variant
-                    }
-                  })
-                  .sort((a, b) => b.score - a.score)
-                  .map(variant => (
-                    <source
-                      key={variant.id}
-                      srcSet={variant.url}
-                      type={variant.mime}
-                    />
-                  ))}
-                <img
-                  style={{
-                    transform: `translate(${zoom ? moveX : '0'}%, ${
-                      zoom ? moveY : '0'
-                    }%) scale(${zoom ? '2' : '1'})`
-                  }}
-                  title={file.name}
-                  onClick={e => {
-                    setZoom(false)
-                    const mime = file.variants.filter(
-                      variant => variant.url == e.currentTarget.currentSrc
-                    )[0].mime
-                    const imex = file.variants.filter(
-                      variant => variant.mime == mime && variant.type == 'image'
-                    )
-                    window.open(
-                      imex.length ? imex[0].url : e.currentTarget.currentSrc,
-                      '_blank'
-                    )
-                  }}
-                  onMouseLeave={() => setZoom(false)}
-                  onMouseMove={e => setXY(e)}
-                />
-              </picture>
+              <Picture file={file} />
             </div>
           </React.Fragment>
         ))}
