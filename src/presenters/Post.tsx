@@ -5,6 +5,7 @@ import moment from 'moment-timezone'
 import OGP from './OGP'
 import Picture from './Picture'
 import Identicon from 'react-identicons'
+import verified from '../static/verified.svg'
 
 import {
   Post,
@@ -15,7 +16,17 @@ import {
 
 export default ({ post }: { post: Post }) => {
   return (
-    <Twemoji>
+    <Twemoji
+      options={{
+        callback: (iconId: number, options: any, variant: any) => {
+          if (iconId == 2714) {
+            return verified
+          } else {
+            return `${options.base}${options.size}/${iconId}${options.ext}`
+          }
+        }
+      }}
+    >
       <div className="post">
         <div className="post-icon">
           <Identicon string={post.author.screenName} size={50} />

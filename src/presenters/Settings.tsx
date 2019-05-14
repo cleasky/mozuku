@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { Moment } from 'moment'
+import Twemoji from 'react-twemoji'
 
 import Config from '../config'
 import NameForm from '../containers/Settings/NameForm'
+import verified from '../static/verified.svg'
 
 export default ({
   name,
@@ -16,104 +18,116 @@ export default ({
   onClickLogout: (e: React.MouseEvent<HTMLButtonElement>) => void
 }) => {
   return (
-    <div className="settings">
-      <div className="settingsItem__name">
-        <span className="settingsItem__name__name">{name}</span>
-        <span className="settingsItem__name__screenName">@{screenName}</span>
-      </div>
-      <div className="settingsItem__title">Account</div>
-      Created at: {createdAt.toLocaleString()}
-      <div className="settingsItem__subtitle">Name</div>
-      <NameForm name={name} />
-      <div className="settingsItem__subtitle">Session</div>
-      <button className="settingsItem__logout" onClick={onClickLogout}>
-        Logout
-      </button>
-      <div className="settingsItem__title">Client</div>
-      <div className="settingsItem__subtitle">Settings</div>
-      <form>
-        <label className="settingsItem__label">
-          <input
-            name="toggle_post_sound"
-            type="checkbox"
-            className="checkbox"
-            defaultChecked={Config.post_sound}
-            onChange={() => {
-              Config.post_sound = !Config.post_sound
-              localStorage.setItem(
-                'Mozukusu::AppPreference::PostSound',
-                JSON.stringify(Config.post_sound)
-              )
-            }}
-          />
-          音を鳴らす
-        </label>
-      </form>
-      <form>
-        <label className="settingsItem__label">
-          <input
-            name="toggle_image_compress"
-            type="checkbox"
-            className="checkbox"
-            defaultChecked={Config.image_compression}
-            onChange={() => {
-              Config.image_compression = !Config.image_compression
-              localStorage.setItem(
-                'Mozukusu::AppPreference::ImageCompression',
-                JSON.stringify(Config.image_compression)
-              )
-            }}
-          />
-          画像を圧縮する
-        </label>
-      </form>
-      <form>
-        <label>
-          読み込む最大画像サイズ:
-          <input
-            name="image_maxsize"
-            type="number"
-            defaultValue={Config.image_maxsize}
-            onChange={e => {
-              const maxsize = parseInt(e.target.value)
-              localStorage.setItem(
-                'Mozukusu::AppPreference::ImageMaxsize',
-                JSON.stringify(maxsize)
-              )
-            }}
-          />
-        </label>
-      </form>
-      <div className="settingsItem__subtitle">Info</div>
-      <ul>
-        <li>
-          API:{' '}
-          <a href={Config.api} target="_blank" rel="noreferrer">
-            {Config.api}
-          </a>
-        </li>
-        <li>
-          OAuth:{' '}
-          <a href={Config.oauth} target="_blank" rel="noreferrer">
-            {Config.oauth}
-          </a>
-        </li>
-        <li>
-          Repository:{' '}
-          {Config.repository_url ? (
-            <a
-              href={`https://${Config.repository_url}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {Config.repository_url}
+    <Twemoji
+      options={{
+        callback: (iconId: number, options: any, variant: any) => {
+          if (iconId == 2714) {
+            return verified
+          } else {
+            return `${options.base}${options.size}/${iconId}${options.ext}`
+          }
+        }
+      }}
+    >
+      <div className="settings">
+        <div className="settingsItem__name">
+          <span className="settingsItem__name__name">{name}</span>
+          <span className="settingsItem__name__screenName">@{screenName}</span>
+        </div>
+        <div className="settingsItem__title">Account</div>
+        Created at: {createdAt.toLocaleString()}
+        <div className="settingsItem__subtitle">Name</div>
+        <NameForm name={name} />
+        <div className="settingsItem__subtitle">Session</div>
+        <button className="settingsItem__logout" onClick={onClickLogout}>
+          Logout
+        </button>
+        <div className="settingsItem__title">Client</div>
+        <div className="settingsItem__subtitle">Settings</div>
+        <form>
+          <label className="settingsItem__label">
+            <input
+              name="toggle_post_sound"
+              type="checkbox"
+              className="checkbox"
+              defaultChecked={Config.post_sound}
+              onChange={() => {
+                Config.post_sound = !Config.post_sound
+                localStorage.setItem(
+                  'Mozukusu::AppPreference::PostSound',
+                  JSON.stringify(Config.post_sound)
+                )
+              }}
+            />
+            音を鳴らす
+          </label>
+        </form>
+        <form>
+          <label className="settingsItem__label">
+            <input
+              name="toggle_image_compress"
+              type="checkbox"
+              className="checkbox"
+              defaultChecked={Config.image_compression}
+              onChange={() => {
+                Config.image_compression = !Config.image_compression
+                localStorage.setItem(
+                  'Mozukusu::AppPreference::ImageCompression',
+                  JSON.stringify(Config.image_compression)
+                )
+              }}
+            />
+            画像を圧縮する
+          </label>
+        </form>
+        <form>
+          <label>
+            読み込む最大画像サイズ:
+            <input
+              name="image_maxsize"
+              type="number"
+              defaultValue={Config.image_maxsize}
+              onChange={e => {
+                const maxsize = parseInt(e.target.value)
+                localStorage.setItem(
+                  'Mozukusu::AppPreference::ImageMaxsize',
+                  JSON.stringify(maxsize)
+                )
+              }}
+            />
+          </label>
+        </form>
+        <div className="settingsItem__subtitle">Info</div>
+        <ul>
+          <li>
+            API:{' '}
+            <a href={Config.api} target="_blank" rel="noreferrer">
+              {Config.api}
             </a>
-          ) : (
-            'unknown'
-          )}
-        </li>
-        <li>Commit: {Config.commit || 'unknown'}</li>
-      </ul>
-    </div>
+          </li>
+          <li>
+            OAuth:{' '}
+            <a href={Config.oauth} target="_blank" rel="noreferrer">
+              {Config.oauth}
+            </a>
+          </li>
+          <li>
+            Repository:{' '}
+            {Config.repository_url ? (
+              <a
+                href={`https://${Config.repository_url}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {Config.repository_url}
+              </a>
+            ) : (
+              'unknown'
+            )}
+          </li>
+          <li>Commit: {Config.commit || 'unknown'}</li>
+        </ul>
+      </div>
+    </Twemoji>
   )
 }
