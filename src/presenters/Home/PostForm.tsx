@@ -1,7 +1,7 @@
 import * as React from 'react'
 const { forwardRef, useState } = React
 import Twemoji from 'react-twemoji'
-import EmojiPicker from 'emojione-picker'
+import { Picker } from 'emoji-mart'
 import { AlbumFile } from '../../models/post'
 
 import Config from '../../config'
@@ -53,10 +53,6 @@ export default forwardRef<HTMLTextAreaElement, T>(
       e.preventDefault()
       submitAlbumFromFile(e)
     }
-    const setEmoji = (s: string) => {
-      setDraft(`${draft}${s}`)
-      setEmojiP(false)
-    }
     const [emojiP, setEmojiP] = useState(false)
 
     return (
@@ -83,13 +79,16 @@ export default forwardRef<HTMLTextAreaElement, T>(
           </button>
         </form>
         {emojiP ? (
-          <Twemoji>
-            <EmojiPicker
-              onChange={(e: any) =>
-                setEmoji(String.fromCodePoint(parseInt(e.unicode, 16)))
-              }
+          <>
+            <Picker
+              set="twitter"
+              native={true}
+              title=""
+              onClick={(emj: any) => {
+                setDraft(`${draft}${emj.native}`)
+              }}
             />
-          </Twemoji>
+          </>
         ) : (
           <></>
         )}

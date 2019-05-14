@@ -11,7 +11,7 @@
     "ahdin": "^1.1.0",
     "axios": "^0.18.0",
     "cafy": "^15.1.1",
-    "emojione-picker": "^2.2.2",
+    "emoji-mart": "^2.11.1",
     "mobx": "^5.9.4",
     "mobx-react-lite": "^1.3.0",
     "moment": "^2.24.0",

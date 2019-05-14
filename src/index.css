@@ -1,6 +1,6 @@
 @import '../node_modules/sanitize.css/sanitize.css';
 @import '../node_modules/placeholder-loading/src/scss/placeholder-loading';
-@import '../node_modules/emojione-picker/css/picker.css';
+@import '../node_modules/emoji-mart/css/emoji-mart.css';
 
 :root {
   --color-base: rgb(223, 244, 250);
@@ -422,21 +422,13 @@ select {
 }
 
 img.emoji {
-  height: 1em;
-  width: 1em;
-  vertical-align: -0.1em;
-  margin: 0 .05em 0 .1em;
+  height: 1.3em;
+  width: 1.3em;
+  vertical-align: middle;
+  margin: .2em;
 }
 
-.emoji-dialog {
+.emoji-mart {
   position: absolute;
-  z-index: 100;
-}
-
-.emojione {
-  width: 1em;
-}
-
-.emoji-row {
-  text-align: center;
+  z-index: 1;
 }
