@@ -1,6 +1,8 @@
 import * as React from 'react'
-const { forwardRef } = React
+const { forwardRef, useState } = React
 import { AlbumFile } from '../../models/post'
+
+import Config from '../../config'
 
 type T = {
   draftDisabled: boolean
@@ -11,6 +13,7 @@ type T = {
   submitAlbumFromFile: (e: React.ChangeEvent<HTMLInputElement>) => void
   images: AlbumFile[]
   isUploding: boolean
+  uploadStatus: string
   cancelFileFromImages: (fileId: number) => void
 }
 export default forwardRef<HTMLTextAreaElement, T>(
@@ -24,6 +27,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
       submitAlbumFromFile,
       images,
       isUploding,
+      uploadStatus,
       cancelFileFromImages
     },
     ref
@@ -42,9 +46,6 @@ export default forwardRef<HTMLTextAreaElement, T>(
     }
     const onPaste = (event: React.ClipboardEvent) => {
       submitAlbum(event)
-    }
-    const onFileCancel = (fileId: number) => {
-      cancelFileFromImages(fileId)
     }
     const onFileSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault()
@@ -93,7 +94,6 @@ export default forwardRef<HTMLTextAreaElement, T>(
               />
             </label>
           </form>
-
           <div className="postForm__images-area__collection">
             {images.map(image => (
               <picture key={image.id}>
@@ -116,6 +116,26 @@ export default forwardRef<HTMLTextAreaElement, T>(
               </picture>
             ))}
           </div>
+        </div>
+        <div className="postForm__post-setting__area">
+          <label>
+            <input
+              type="checkbox"
+              name="toggle_image_compression"
+              className="checkbox"
+              defaultChecked={Config.image_compression}
+              onChange={() => {
+                Config.image_compression = !Config.image_compression
+                localStorage.setItem(
+                  'Mozukusu::AppPreference::ImageCompression',
+                  JSON.stringify(Config.image_compression)
+                )
+              }}
+            />
+            画像を圧縮する
+          </label>
+          {' | '}
+          <span>{uploadStatus}</span>
         </div>
       </>
     )

@@ -28,6 +28,7 @@ export default () => {
   const [isUploading, setIsUploading] = useState(false)
   const submitDraft = async () => {
     setDraftDisabled(true)
+    setUploadStatus('投稿を送信しています…。')
     if (draft.trim().length > 0 || images.length >= 1) {
       try {
         await seaClient.post('/v1/posts', {
@@ -36,15 +37,19 @@ export default () => {
         })
         setDraft('')
         setImages([])
+        setUploadStatus('送信に成功しました。')
       } catch (e) {
         // TODO: Add error reporting
         console.error(e)
+        setUploadStatus('送信に失敗しました…。')
       }
     }
     setDraftDisabled(false)
   }
   const fileUploader = (file: File) => {
+    if (isUploading) return
     setIsUploading(true)
+    setUploadStatus('画像を準備しています…')
     new Promise((resolve, reject) => {
       if (Config.image_compression) {
         const reader = new FileReader()
@@ -70,15 +75,18 @@ export default () => {
       form.append('file', uploadTarget)
       form.append('name', uploadTarget.name)
       form.append('ifNameConflicted', 'add-date-string')
+      setUploadStatus('画像をアップロードしています…')
       seaClient
         .post('/v1/album/files', form)
         .then(file => {
           setImages(images => [...images, file])
           setIsUploading(false)
+          setUploadStatus(`画像のアップロードに成功しました: ${file.name}`)
         })
         .catch(err => {
           console.error(err)
           setIsUploading(false)
+          setUploadStatus('画像のアップロードに失敗しました…。')
         })
     })
   }
@@ -108,6 +116,9 @@ export default () => {
       Array.from(event.target.files).forEach(file => fileUploader(file))
     }
   }
+  const [uploadStatus, setUploadStatus] = useState(
+    'Tips: テキストエリアへ入力中のCtrl-Vでも画像を添付できます。'
+  )
   const cancelFileFromImagees = (fileId: number) => {
     setImages(images.filter(image => image.id != fileId))
   }
@@ -123,6 +134,7 @@ export default () => {
       submitAlbumFromFile={submitAlbumFromFile}
       images={images}
       isUploding={isUploading}
+      uploadStatus={uploadStatus}
       cancelFileFromImages={cancelFileFromImagees}
     />
   )

@@ -122,7 +122,7 @@ select {
 .postForm__images-area {
   position: relative;
   height: 64px;
-  background-color: #dadada;
+  background-color: #f1f1f1;
 }
 
 .postForm__images-area__collection {
@@ -185,6 +185,14 @@ select {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.postForm__post-setting__area {
+  background-color: #f1f1f1;
+  vertical-align: middle;
+  margin: auto;
+  padding: 6px;
+  font-size: 0.8em;
 }
 
 .timelineItem__readMore {

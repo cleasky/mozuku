@@ -32,7 +32,7 @@ export default ({
       <div className="settingsItem__title">Client</div>
       <div className="settingsItem__subtitle">Settings</div>
       <form>
-        <label className="settingsItem__label" htmlFor="toggle_image_compress">
+        <label className="settingsItem__label">
           <input
             name="toggle_image_compress"
             type="checkbox"
