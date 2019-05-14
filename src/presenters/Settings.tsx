@@ -49,6 +49,23 @@ export default ({
           画像を圧縮する
         </label>
       </form>
+      <form>
+        <label>
+          読み込む最大画像サイズ:
+          <input
+            name="image_maxsize"
+            type="number"
+            defaultValue={Config.image_maxsize}
+            onChange={e => {
+              const maxsize = parseInt(e.target.value)
+              localStorage.setItem(
+                'Mozukusu::AppPreference::ImageMaxsize',
+                JSON.stringify(maxsize)
+              )
+            }}
+          />
+        </label>
+      </form>
       <div className="settingsItem__subtitle">Info</div>
       <ul>
         <li>

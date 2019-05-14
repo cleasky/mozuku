@@ -10,6 +10,7 @@ import {
   BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_BOLD
 } from '../models'
+import config from '../config'
 
 export default ({ post }: { post: Post }) => {
   const [moveX, setMoveX] = useState(0)
@@ -114,7 +115,14 @@ export default ({ post }: { post: Post }) => {
             <div className="post-image__img">
               <picture>
                 {file.variants
-                  .filter(variant => variant.type == 'image')
+                  .filter(variant => variant.size <= config.image_maxsize)
+                  .filter((variant, index, vrs) => {
+                    if (vrs.filter(vr => vr.type == 'image').length) {
+                      return variant.type == 'image'
+                    } else {
+                      return variant
+                    }
+                  })
                   .sort((a, b) => b.score - a.score)
                   .map(variant => (
                     <source
@@ -132,7 +140,16 @@ export default ({ post }: { post: Post }) => {
                   title={file.name}
                   onClick={e => {
                     setZoom(false)
-                    window.open(e.currentTarget.currentSrc, '_blank')
+                    const mime = file.variants.filter(
+                      variant => variant.url == e.currentTarget.currentSrc
+                    )[0].mime
+                    const imex = file.variants.filter(
+                      variant => variant.mime == mime && variant.type == 'image'
+                    )
+                    window.open(
+                      imex.length ? imex[0].url : e.currentTarget.currentSrc,
+                      '_blank'
+                    )
                   }}
                   onMouseLeave={() => setZoom(false)}
                   onMouseMove={e => setXY(e)}
