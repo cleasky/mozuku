@@ -15,9 +15,15 @@ import {
   BODYPART_TYPE_BOLD
 } from '../models'
 
-export default ({ post }: { post: Post }) => {
-  const [openModal, setOpenModal] = useState(null as string | null)
-
+export default ({
+  post,
+  openModal,
+  setOpenModal
+}: {
+  post: Post
+  openModal: string | null
+  setOpenModal: (s: string | null) => void
+}) => {
   return (
     <Twemoji
       options={{
@@ -116,16 +122,6 @@ export default ({ post }: { post: Post }) => {
             </React.Fragment>
           ))}
         </div>
-        {openModal && (
-          <div className="post-image__modal" onClick={() => setOpenModal(null)}>
-            <img
-              src={openModal}
-              onClick={() => {
-                window.open(openModal, '_blank')
-              }}
-            />
-          </div>
-        )}
       </div>
     </Twemoji>
   )
