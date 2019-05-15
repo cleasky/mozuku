@@ -83,6 +83,27 @@ select {
   cursor: pointer;
 }
 
+.mozuku-welcome__space {
+  padding: 12px;
+}
+
+.mozuku-welcome__title {
+  font-size: 2em;
+}
+
+.mozuku-welcome__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  right: 24px;
+  width: 100px;
+  height: 36px;
+  background-color: var(--color-main);
+  color: #fff;
+  font-size: 0.8em;
+}
+
 .mozuku-container {
   width: 100%;
   max-width: 720px;

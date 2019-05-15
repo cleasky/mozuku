@@ -114,6 +114,7 @@ class SApp {
       }
       const { screenName } = a
       const target = '@' + screenName
+      console.log(new RegExp('/@w+/').exec(p.payload))
       const r = p.payload.split(new RegExp(`(${target})`, 'gi'))
       return r.map(t => {
         if (t === target) {
