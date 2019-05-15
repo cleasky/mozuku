@@ -62,12 +62,9 @@ export default ({ authURL }: { authURL: string }) => {
               </ul>
             </>
           )}
-          <button
-            className="mozuku-welcome__button"
-            onClick={() => window.location.replace(authURL)}
-          >
-            Login
-          </button>
+          <a href={authURL}>
+            <button className="mozuku-welcome__button">Login</button>
+          </a>
         </div>
       </div>
     </div>
