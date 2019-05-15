@@ -34,13 +34,6 @@ export default ({
     <picture>
       {file.variants
         .filter(variant => variant.size <= config.image_maxsize)
-        .filter((variant, index, vrs) => {
-          if (vrs.filter(vr => vr.type == 'image').length) {
-            return variant.type == 'image'
-          } else {
-            return variant
-          }
-        })
         .sort((a, b) => b.score - a.score)
         .map(variant => (
           <source key={variant.id} srcSet={variant.url} type={variant.mime} />

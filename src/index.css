@@ -225,6 +225,10 @@ select {
   .emoji-mart {
     right: 0;
   }
+
+  .mozuku-container {
+    margin: 24px auto 0;
+  }
 }
 
 .post-icon {
@@ -265,6 +269,7 @@ select {
 
 .post-head__time {
   color: #999;
+  white-space: pre;
 }
 
 .post__body {
