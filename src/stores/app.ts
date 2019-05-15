@@ -18,6 +18,8 @@ import { PostBodyPart } from '../models/post'
 
 export type ShortcutFn = (ev: KeyboardEvent) => void
 
+import messageSound from '../static/decision22.mp3'
+
 class SApp {
   readonly defaultTitle = 'Mozuku'
 
@@ -113,11 +115,16 @@ class SApp {
         return [p]
       }
       const { screenName } = a
-      const target = '@' + screenName
-      console.log(new RegExp('/@w+/').exec(p.payload))
+      const target = '@' + screenName + ' '
       const r = p.payload.split(new RegExp(`(${target})`, 'gi'))
       return r.map(t => {
         if (t === target) {
+          try {
+            new Audio(messageSound).play()
+          } catch (error) {
+            console.error(error)
+          }
+
           return {
             type: BODYPART_TYPE_BOLD,
             payload: t

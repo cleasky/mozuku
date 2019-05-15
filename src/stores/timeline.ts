@@ -175,7 +175,6 @@ class TimelineStore {
     this.streamLastPingFromServer = new Date()
     // internal state
     this.stream = stream
-    const postSound = new Audio(postSoundFile)
 
     stream.addEventListener('message', ev => {
       try {
@@ -186,7 +185,7 @@ class TimelineStore {
         }).throw(JSON.parse(ev.data))
         if (m.type == 'message' && config.post_sound) {
           try {
-            postSound.play()
+            new Audio(postSoundFile).play()
           } catch (error) {
             console.error(error)
           }
