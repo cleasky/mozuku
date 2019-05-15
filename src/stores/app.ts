@@ -15,6 +15,7 @@ import {
   BODYPART_TYPE_TEXT
 } from '../models'
 import { PostBodyPart } from '../models/post'
+import Config from '../config'
 
 export type ShortcutFn = (ev: KeyboardEvent) => void
 
@@ -119,12 +120,13 @@ class SApp {
       const r = p.payload.split(new RegExp(`(${target})`, 'gi'))
       return r.map(t => {
         if (t === target) {
-          try {
-            new Audio(messageSound).play()
-          } catch (error) {
-            console.error(error)
+          if (Config.post_sound_reply) {
+            try {
+              new Audio(messageSound).play()
+            } catch (error) {
+              console.error(error)
+            }
           }
-
           return {
             type: BODYPART_TYPE_BOLD,
             payload: t

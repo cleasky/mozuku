@@ -26,6 +26,10 @@ export default {
     JSON.parse(
       localStorage.getItem('Mozukusu::AppPreference::PostSound') || 'false'
     ) || false,
+  post_sound_reply:
+    JSON.parse(
+      localStorage.getItem('Mozukusu::AppPreference::PostSoundReply') || 'false'
+    ) || false,
   image_maxsize:
     JSON.parse(
       localStorage.getItem('Mozukusu::AppPreference::ImageMaxsize') || '1000000'

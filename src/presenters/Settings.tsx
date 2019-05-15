@@ -67,7 +67,25 @@ export default ({
                 )
               }}
             />
-            音を鳴らす
+            音を鳴らす（投稿）
+          </label>
+        </form>
+        <form>
+          <label className="settingsItem__label">
+            <input
+              name="toggle_post_sound_reply"
+              type="checkbox"
+              className="checkbox"
+              defaultChecked={Config.post_sound_reply}
+              onChange={() => {
+                Config.post_sound_reply = !Config.post_sound_reply
+                localStorage.setItem(
+                  'Mozukusu::AppPreference::PostSoundReply',
+                  JSON.stringify(Config.post_sound_reply)
+                )
+              }}
+            />
+            音を鳴らす（リプライ）
           </label>
         </form>
         <form>
