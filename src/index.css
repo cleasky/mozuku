@@ -91,6 +91,10 @@ select {
   font-size: 2em;
 }
 
+.mozuku-welcome__subtitle {
+  font-size: 1.5em;
+}
+
 .mozuku-welcome__button {
   display: flex;
   justify-content: center;

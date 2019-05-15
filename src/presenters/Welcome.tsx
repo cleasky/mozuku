@@ -28,6 +28,40 @@ export default ({ authURL }: { authURL: string }) => {
             You need to log in to <a href={url.origin}>{url.host}</a> before
             logging into here.
           </p>
+          {Config.commit && (
+            <>
+              <div className="mozuku-welcome__subtitle">Info</div>
+              <ul>
+                <li>
+                  API:{' '}
+                  <a href={Config.api} target="_blank" rel="noreferrer">
+                    {Config.api}
+                  </a>
+                </li>
+                <li>
+                  OAuth:{' '}
+                  <a href={Config.oauth} target="_blank" rel="noreferrer">
+                    {Config.oauth}
+                  </a>
+                </li>
+                <li>
+                  Repository:{' '}
+                  {Config.repository_url ? (
+                    <a
+                      href={`https://${Config.repository_url}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {Config.repository_url}
+                    </a>
+                  ) : (
+                    'unknown'
+                  )}
+                </li>
+                <li>Commit: {Config.commit || 'unknown'}</li>
+              </ul>
+            </>
+          )}
           <button
             className="mozuku-welcome__button"
             onClick={() => window.location.replace(authURL)}
