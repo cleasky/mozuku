@@ -13,6 +13,7 @@ import {
   BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_BOLD
 } from '../models'
+import config from '../config'
 
 export default ({
   post,
@@ -37,13 +38,20 @@ export default ({
         <div className="post-icon">
           {post.author.avatarFile ? (
             <picture>
-              {post.author.avatarFile.variants.map(variant => (
-                <source
-                  srcSet={variant.url}
-                  type={variant.mime}
-                  key={variant.id}
-                />
-              ))}
+              {post.author.avatarFile.variants
+                .filter(
+                  variant =>
+                    variant.size <= config.image_maxsize &&
+                    variant.type == 'thumbnail'
+                )
+                .sort((a, b) => b.score - a.score)
+                .map(variant => (
+                  <source
+                    srcSet={variant.url}
+                    type={variant.mime}
+                    key={variant.id}
+                  />
+                ))}
               <img title={post.author.avatarFile.name} />
             </picture>
           ) : (
@@ -132,6 +140,11 @@ export default ({
             </React.Fragment>
           ))}
         </div>
+        {post.files.length >= 1 && (
+          <div className="post-files__info">
+            {post.files.length} attachments
+          </div>
+        )}
       </div>
     </Twemoji>
   )

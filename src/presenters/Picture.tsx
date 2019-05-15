@@ -56,7 +56,7 @@ export default ({
           const urlToOpen = imex.length
             ? imex[0].url
             : e.currentTarget.currentSrc
-          history.pushState(history.state, file.name, `#image_${urlToOpen}`)
+          history.pushState(history.state, file.name, `#image_${file.id}`)
           setOpenModal(urlToOpen)
         }}
         onMouseLeave={() => setZoom(false)}

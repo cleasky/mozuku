@@ -333,6 +333,11 @@ select {
   margin: auto;
 }
 
+.post-files__info {
+  font-size: 0.8em;
+  color: #999;
+}
+
 .post__ogp {
   margin: 6px;
   padding: 6px calc(120px + 24px + 24px) 6px 12px;
