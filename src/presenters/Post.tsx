@@ -25,13 +25,13 @@ export default ({
 }) => {
   const [nameHidden, setNameHidden] = useState(true)
   useEffect(() => {
-    console.log('putted!')
     const element = document.createElement('span')
     const text = document.createTextNode(post.author.name)
     element.style.cssText = 'position:absolute;opacity:0;'
     element.append(text)
     const putElement = document.body.appendChild(element)
     setNameHidden(!putElement.offsetWidth)
+    document.body.removeChild(element)
   }, [])
   return (
     <Twemoji
