@@ -1,5 +1,5 @@
 import * as React from 'react'
-const { useState } = React
+const { useState, useEffect } = React
 import { Post as PostModel } from '../../models'
 import Post from '../Post'
 
@@ -13,10 +13,16 @@ export default ({
   readMoreDisabled: boolean
 }) => {
   const [openModal, setOpenModal] = useState(null as string | null)
-  window.addEventListener('popstate', () => {
-    setOpenModal(null)
-    return
-  })
+  useEffect(() => {
+    const watchHistoryBack = () => {
+      setOpenModal(null)
+      return
+    }
+    window.addEventListener('popstate', watchHistoryBack)
+    return () => {
+      window.removeEventListener('popstate', watchHistoryBack)
+    }
+  }, [])
 
   return (
     <ul className="timeline">
@@ -55,7 +61,7 @@ export default ({
       )}
       {timeline.map(post => (
         <li className="timelineItem" key={post.id}>
-          <Post post={post} openModal={openModal} setOpenModal={setOpenModal} />
+          <Post post={post} setOpenModal={setOpenModal} />
         </li>
       ))}
       {openModal && (

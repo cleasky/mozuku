@@ -1,5 +1,4 @@
 import * as React from 'react'
-const { useState } = React
 import Twemoji from 'react-twemoji'
 import moment from 'moment-timezone'
 
@@ -17,11 +16,9 @@ import {
 
 export default ({
   post,
-  openModal,
   setOpenModal
 }: {
   post: Post
-  openModal: string | null
   setOpenModal: (s: string | null) => void
 }) => {
   return (
