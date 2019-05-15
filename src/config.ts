@@ -19,6 +19,9 @@ export default {
   commit: process.env.COMMIT_REF
     ? `${process.env.BRANCH}@${process.env.COMMIT_REF}`
     : null,
+  commit_fetch_url: process.env.COMMIT_FETCH_URL
+    ? process.env.COMMIT_FETCH_URL
+    : null,
   post_sound:
     JSON.parse(
       localStorage.getItem('Mozukusu::AppPreference::PostSound') || 'false'

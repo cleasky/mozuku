@@ -10,12 +10,14 @@ export default ({
   name,
   screenName,
   createdAt,
-  onClickLogout
+  onClickLogout,
+  commitState
 }: {
   name: string
   screenName: string
   createdAt: Moment
   onClickLogout: (e: React.MouseEvent<HTMLButtonElement>) => void
+  commitState: any
 }) => {
   return (
     <Twemoji
@@ -127,6 +129,35 @@ export default ({
           </li>
           <li>Commit: {Config.commit || 'unknown'}</li>
         </ul>
+        {Config.commit_fetch_url &&
+          (commitState.commit ? (
+            <div>
+              <ul>
+                <li>
+                  Latest Commit: {commitState.commit.message}
+                  <ul>
+                    <li>Hash: {commitState.sha}</li>
+                    <li>Author: {commitState.commit.author.name}</li>
+                    <li>Commited at: {commitState.commit.author.date}</li>
+                  </ul>
+                </li>
+              </ul>
+              Running version:{' '}
+              {Config.commit ? (
+                Config.commit.split('@')[1] == commitState.sha ? (
+                  'up-to-date'
+                ) : (
+                  <>
+                    outdated. <a onClick={() => location.reload()}>refresh?</a>
+                  </>
+                )
+              ) : (
+                'unknown'
+              )}
+            </div>
+          ) : (
+            'loading commit information...'
+          ))}
       </div>
     </Twemoji>
   )
