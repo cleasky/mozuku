@@ -13,10 +13,10 @@ export default ({
   readMoreDisabled: boolean
 }) => {
   const [openModal, setOpenModal] = useState(null as string | null)
-  window.onpopstate = () => {
+  window.addEventListener('popstate', () => {
     setOpenModal(null)
     return
-  }
+  })
 
   return (
     <ul className="timeline">
