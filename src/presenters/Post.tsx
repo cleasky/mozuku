@@ -35,7 +35,20 @@ export default ({
     >
       <div className="post">
         <div className="post-icon">
-          <Identicon string={post.author.screenName} size={50} />
+          {post.author.avatarFile ? (
+            <picture>
+              {post.author.avatarFile.variants.map(variant => (
+                <source
+                  srcSet={variant.url}
+                  type={variant.mime}
+                  key={variant.id}
+                />
+              ))}
+              <img title={post.author.avatarFile.name} />
+            </picture>
+          ) : (
+            <Identicon string={post.author.screenName} size={50} />
+          )}
         </div>
         <div className="post-main">
           <div className="post__head post-head">

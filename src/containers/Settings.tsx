@@ -26,6 +26,7 @@ export default () => {
         name={appStore.me.name}
         screenName={appStore.me.screenName}
         createdAt={appStore.me.createdAt}
+        avatar={appStore.me.avatarFile}
         onClickLogout={e => {
           e.preventDefault()
           appStore.logout()

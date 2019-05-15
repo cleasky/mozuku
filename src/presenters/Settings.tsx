@@ -3,19 +3,23 @@ import { Moment } from 'moment'
 import Twemoji from 'react-twemoji'
 
 import Config from '../config'
+import AlbumFile from '../models/album'
 import NameForm from '../containers/Settings/NameForm'
+import AvatarForm from '../containers/Settings/AvatarForm'
 import verified from '../static/verified.svg'
 
 export default ({
   name,
   screenName,
   createdAt,
+  avatar,
   onClickLogout,
   commitState
 }: {
   name: string
   screenName: string
   createdAt: Moment
+  avatar: AlbumFile | null
   onClickLogout: (e: React.MouseEvent<HTMLButtonElement>) => void
   commitState: any
 }) => {
@@ -40,6 +44,8 @@ export default ({
         Created at: {createdAt.toLocaleString()}
         <div className="settingsItem__subtitle">Name</div>
         <NameForm name={name} />
+        <div className="settingsItem__subtitle">Avatar</div>
+        <AvatarForm avatarFile={avatar} />
         <div className="settingsItem__subtitle">Session</div>
         <button className="settingsItem__logout" onClick={onClickLogout}>
           Logout

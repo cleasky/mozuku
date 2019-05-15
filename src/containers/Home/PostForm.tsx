@@ -1,6 +1,5 @@
 import * as React from 'react'
 const { useState, useRef } = React
-import querystring from 'querystring'
 const Ahdin = require('ahdin')
 
 import seaClient from '../../util/seaClient'
@@ -9,8 +8,7 @@ import { useShortcut } from '../../stores/app'
 import axios from 'axios'
 import Config from '../../config'
 import PostForm from '../../presenters/Home/PostForm'
-import { setServers } from 'dns'
-import { AlbumFile } from '../../models/post'
+import AlbumFile from '../../models/album'
 
 export default () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -81,7 +79,9 @@ export default () => {
         .then(file => {
           setImages(images => [...images, file])
           setIsUploading(false)
-          setUploadStatus(`画像のアップロードに成功しました: ${file.name}`)
+          setUploadStatus(
+            `画像のアップロードに成功しました: ${file.name} (${file.id})`
+          )
         })
         .catch(err => {
           console.error(err)

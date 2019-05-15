@@ -2,7 +2,7 @@ import * as React from 'react'
 const { forwardRef, useState } = React
 import Twemoji from 'react-twemoji'
 import { Picker } from 'emoji-mart'
-import { AlbumFile } from '../../models/post'
+import AlbumFile from '../../models/album'
 
 import Config from '../../config'
 

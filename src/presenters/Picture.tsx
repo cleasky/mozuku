@@ -2,7 +2,7 @@ import * as React from 'react'
 const { useState } = React
 
 import config from '../config'
-import { AlbumFile } from '../models/post'
+import AlbumFile from '../models/album'
 
 export default ({
   file,
