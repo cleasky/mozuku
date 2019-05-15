@@ -60,8 +60,11 @@ export default ({
           const imex = file.variants.filter(
             variant => variant.mime == mime && variant.type == 'image'
           )
-          history.pushState(history.state, file.name, `#image_modal`)
-          setOpenModal(imex.length ? imex[0].url : e.currentTarget.currentSrc)
+          const urlToOpen = imex.length
+            ? imex[0].url
+            : e.currentTarget.currentSrc
+          history.pushState(history.state, file.name, `#image_${urlToOpen}`)
+          setOpenModal(urlToOpen)
         }}
         onMouseLeave={() => setZoom(false)}
         onMouseMove={e => setXY(e)}
