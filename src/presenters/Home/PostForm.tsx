@@ -91,14 +91,16 @@ export default forwardRef<HTMLTextAreaElement, T>(
           </label>
           {emojiP ? (
             <>
-              <Picker
-                set="twitter"
-                native={true}
-                title=""
-                onClick={(emj: any) => {
-                  setDraft(`${draft}${emj.native}`)
-                }}
-              />
+              <div className="emoji-mart-container">
+                <Picker
+                  set="twitter"
+                  native={true}
+                  title=""
+                  onClick={(emj: any) => {
+                    setDraft(`${draft}${emj.native}`)
+                  }}
+                />
+              </div>
               <div
                 className="emoji-mart__wrap"
                 onClick={() => {
