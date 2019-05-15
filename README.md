@@ -1,6 +1,6 @@
-mozuku [![Netlify Status](https://api.netlify.com/api/v1/badges/ef4b9535-2388-411f-806b-bbb97ea1e4ec/deploy-status)](https://app.netlify.com/sites/mozuku/deploys)
-===
-:whale: One of seaweed, client of [rinsuki/sea](https://github.com/rinsuki/sea).
+# mozukusu [![Netlify Status](https://api.netlify.com/api/v1/badges/42459b31-f15b-4251-a355-0c6c94275f66/deploy-status)](https://app.netlify.com/sites/mozukusu/deploys)
+
+:whale: One of seaweed fork, client of [rinsuki/sea](https://github.com/rinsuki/sea).
 
 ## Getting Started
 
