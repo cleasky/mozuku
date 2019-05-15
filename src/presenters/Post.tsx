@@ -1,4 +1,5 @@
 import * as React from 'react'
+const { useState, useEffect } = React
 import Twemoji from 'react-twemoji'
 import moment from 'moment-timezone'
 
@@ -22,6 +23,16 @@ export default ({
   post: Post
   setOpenModal: (s: string | null) => void
 }) => {
+  const [nameHidden, setNameHidden] = useState(true)
+  useEffect(() => {
+    console.log('putted!')
+    const element = document.createElement('span')
+    const text = document.createTextNode(post.author.name)
+    element.style.cssText = 'position:absolute;opacity:0;'
+    element.append(text)
+    const putElement = document.body.appendChild(element)
+    setNameHidden(!putElement.offsetWidth)
+  }, [])
   return (
     <Twemoji
       options={{
@@ -34,6 +45,7 @@ export default ({
         }
       }}
     >
+      <div id="namecheck" />
       <div className="post">
         <div className="post-icon">
           {post.author.avatarFile ? (
@@ -61,17 +73,8 @@ export default ({
         <div className="post-main">
           <div className="post__head post-head">
             <div className="post-head__name">
-              <span className="post-head__name__name">
-                {[].filter
-                  .call(
-                    post.author.name.trim(),
-                    (c: string) => c.charCodeAt(0) !== 8203
-                  )
-                  .join('')
-                  .replace(/[\u200B-\u200D\uFEFF]/g, '')
-                  .replace(/[\uD800-\uDFFF]{2}/g, '').length
-                  ? post.author.name
-                  : `@${post.author.screenName}`}
+              <span className="post-head__name__name" hidden={nameHidden}>
+                {post.author.name}
               </span>
               <span className="post-head__name__screenName">
                 @{post.author.screenName}
