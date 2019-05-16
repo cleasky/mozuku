@@ -135,24 +135,29 @@ export default forwardRef<HTMLTextAreaElement, T>(
           </form>
           <div className="postForm__images-area__collection">
             {images.map(image => (
-              <picture key={image.id}>
-                {image.variants
-                  .filter(variant => variant.type == 'thumbnail')
-                  .map(variant => (
-                    <source
-                      key={variant.id}
-                      srcSet={variant.url}
-                      type={variant.mime}
-                    />
-                  ))}
-                <img title={image.name} />
+              <div className="postForm__images-area__collection__item">
+                <picture key={image.id}>
+                  {image.variants
+                    .filter(variant => variant.type == 'thumbnail')
+                    .map(variant => (
+                      <source
+                        key={variant.id}
+                        srcSet={variant.url}
+                        type={variant.mime}
+                      />
+                    ))}
+                  <img
+                    title={image.name}
+                    className="postForm__images-area__collection__picture__img"
+                  />
+                </picture>
                 <div
                   onClick={() => cancelFileFromImages(image.id)}
                   className="postForm__images-area__collection__button"
                 >
                   x
                 </div>
-              </picture>
+              </div>
             ))}
           </div>
         </div>

@@ -165,24 +165,23 @@ select {
   overflow: hidden;
 }
 
-.postForm__images-area__collection img {
-  display: flex;
+.postForm__images-area__collection__picture__img {
   height: 36px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  margin: 14px 7px;
-  float: left;
+  margin: 14px 0;
   image-orientation: from-image;
 }
 
+.postForm__images-area__collection__item {
+  display: flex;
+  float: left;
+}
+
 .postForm__images-area__collection__button {
-  display: inline-block;
   position: relative;
   width: 24px;
   height: 24px;
   right: 12px;
-  top: 3px;
+  top: 4px;
   color: #fff;
   background-color: var(--color-main);
   border-radius: 50px;
