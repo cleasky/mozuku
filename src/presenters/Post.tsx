@@ -24,6 +24,10 @@ export default ({
   setOpenModal: (s: string | null) => void
 }) => {
   const [nameHidden, setNameHidden] = useState(false)
+  const formattedTime = moment(post.createdAt)
+    .tz('Asia/Tokyo')
+    .format()
+  const [showRelativeTime, setShowRelativeTime] = useState(true)
   const getRelativeTime = () => {
     return moment(post.createdAt)
       .tz('Asia/Tokyo')
@@ -89,15 +93,13 @@ export default ({
                 @{post.author.screenName}
               </span>
             </div>
-            <a
-              href="#"
+            <div
               className="post-head__time"
-              title={moment(post.createdAt)
-                .tz('Asia/Tokyo')
-                .format()}
+              title={formattedTime}
+              onClick={() => setShowRelativeTime(!showRelativeTime)}
             >
-              {relativeTime}
-            </a>
+              {showRelativeTime ? relativeTime : formattedTime}
+            </div>
           </div>
           <div className="post__body">
             {post.body.parts.map((p, i) => {
