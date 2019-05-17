@@ -89,14 +89,15 @@ export default ({
                 @{post.author.screenName}
               </span>
             </div>
-            <div
+            <a
+              href="#"
               className="post-head__time"
               title={moment(post.createdAt)
                 .tz('Asia/Tokyo')
                 .format()}
             >
               {relativeTime}
-            </div>
+            </a>
           </div>
           <div className="post__body">
             {post.body.parts.map((p, i) => {

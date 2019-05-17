@@ -294,6 +294,7 @@ select {
 .post-head__time {
   color: #999;
   white-space: pre;
+  text-decoration: none;
 }
 
 .post__body {
