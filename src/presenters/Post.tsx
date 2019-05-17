@@ -23,7 +23,16 @@ export default ({
   post: Post
   setOpenModal: (s: string | null) => void
 }) => {
-  const [nameHidden, setNameHidden] = useState(true)
+  const [nameHidden, setNameHidden] = useState(false)
+  const getRelativeTime = () => {
+    return moment(post.createdAt)
+      .tz('Asia/Tokyo')
+      .fromNow(true)
+  }
+  const [relativeTime, setRelativeTime] = useState(getRelativeTime())
+  setInterval(() => {
+    setRelativeTime(getRelativeTime())
+  }, 1000)
   useEffect(() => {
     const element = document.createElement('span')
     const text = document.createTextNode(post.author.name)
@@ -80,10 +89,13 @@ export default ({
                 @{post.author.screenName}
               </span>
             </div>
-            <div className="post-head__time">
-              {moment(post.createdAt)
+            <div
+              className="post-head__time"
+              title={moment(post.createdAt)
                 .tz('Asia/Tokyo')
-                .format('HH:mm:ss・MM/DD')}
+                .format()}
+            >
+              {relativeTime}
             </div>
           </div>
           <div className="post__body">
