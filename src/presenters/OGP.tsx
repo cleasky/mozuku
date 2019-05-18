@@ -7,7 +7,7 @@ import { OGP } from '../models/post'
 export default ({ link }: { link: string }) => {
   const [ogp, setOGP] = useState(null as OGP | null)
   useEffect(() => {
-    Axios.get('https://analizzatore.prezzemolo.org', {
+    Axios.get('https://ricapitolare.now.sh/fetch', {
       params: {
         url: link
       }
