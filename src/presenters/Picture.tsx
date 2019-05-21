@@ -36,7 +36,13 @@ export default ({
         .filter(variant => variant.size <= config.image_maxsize)
         .sort((a, b) => b.score - a.score)
         .map(variant => (
-          <source key={variant.id} srcSet={variant.url} type={variant.mime} />
+          <source
+            key={variant.id}
+            srcSet={`https://cdn.staticaly.com/img/${
+              variant.url.split('://')[1]
+            }`}
+            type={variant.mime}
+          />
         ))}
       <img
         style={{

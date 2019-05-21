@@ -24,7 +24,12 @@ export default ({ link }: { link: string }) => {
     <>
       {ogp ? (
         <div className="post__ogp">
-          {ogp.image && <img className="post__ogp__img" src={ogp.image} />}
+          {ogp.image && (
+            <img
+              className="post__ogp__img"
+              src={`https://cdn.staticaly.com/img/${ogp.image.split('://')[1]}`}
+            />
+          )}
           <a href={link} target="_blank" rel="noreferrer">
             <div className="post__ogp__info">
               <div className="post__ogp__info__title">{ogp.title}</div>

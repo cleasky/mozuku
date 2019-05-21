@@ -72,7 +72,9 @@ export default ({
                 .sort((a, b) => b.score - a.score)
                 .map(variant => (
                   <source
-                    srcSet={variant.url}
+                    srcSet={`https://cdn.staticaly.com/img/${
+                      variant.url.split('://')[1]
+                    }`}
                     type={variant.mime}
                     key={variant.id}
                   />
