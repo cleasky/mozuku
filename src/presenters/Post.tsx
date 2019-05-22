@@ -6,6 +6,7 @@ import moment from 'moment-timezone'
 import appStore from '../stores/app'
 import OGP from './OGP'
 import Picture from './Picture'
+import Img from 'react-image'
 import Identicon from 'react-identicons'
 import verified from '../static/verified.svg'
 
@@ -63,24 +64,18 @@ export default ({
       <div className="post">
         <div className="post-icon">
           {post.author.avatarFile ? (
-            <picture>
-              {post.author.avatarFile.variants
+            <Img
+              src={post.author.avatarFile.variants
                 .filter(
                   variant =>
                     variant.size <= config.image_maxsize &&
-                    variant.type == 'thumbnail' &&
-                    appStore.isFormatSupported(variant.mime)
+                    variant.type == 'thumbnail'
                 )
                 .sort((a, b) => b.score - a.score)
-                .map(variant => (
-                  <source
-                    srcSet={variant.url}
-                    type={variant.mime}
-                    key={variant.id}
-                  />
-                ))}
-              <img title={post.author.avatarFile.name} />
-            </picture>
+                .map(variant => variant.url)}
+              decode={true}
+              title={post.author.avatarFile.name}
+            />
           ) : (
             <Identicon string={post.author.screenName} size={50} />
           )}

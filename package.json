@@ -23,6 +23,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-identicons": "^1.1.7",
+    "react-image": "^2.1.1",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-twemoji": "^0.1.0",
