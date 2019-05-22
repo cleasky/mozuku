@@ -3,6 +3,7 @@ const { useState, useEffect } = React
 import Twemoji from 'react-twemoji'
 import moment from 'moment-timezone'
 
+import appStore from '../stores/app'
 import OGP from './OGP'
 import Picture from './Picture'
 import Identicon from 'react-identicons'
@@ -67,14 +68,13 @@ export default ({
                 .filter(
                   variant =>
                     variant.size <= config.image_maxsize &&
-                    variant.type == 'thumbnail'
+                    variant.type == 'thumbnail' &&
+                    appStore.isFormatSupported(variant.mime)
                 )
                 .sort((a, b) => b.score - a.score)
                 .map(variant => (
                   <source
-                    srcSet={`https://cdn.staticaly.com/img/${
-                      variant.url.split('://')[1]
-                    }`}
+                    srcSet={variant.url}
                     type={variant.mime}
                     key={variant.id}
                   />
