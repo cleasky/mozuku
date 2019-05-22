@@ -29,16 +29,17 @@ export default ({
           100
     )
   }
+  const valid = file.variants
+    .filter(variant => variant.size <= config.image_maxsize)
+    .sort((a, b) => b.score - a.score)
 
   return (
     <picture>
-      {file.variants
-        .filter(variant => variant.size <= config.image_maxsize)
-        .sort((a, b) => b.score - a.score)
-        .map(variant => (
-          <source key={variant.id} srcSet={variant.url} type={variant.mime} />
-        ))}
+      {valid.map(variant => (
+        <source key={variant.id} srcSet={variant.url} type={variant.mime} />
+      ))}
       <img
+        src={valid.length ? valid[0].url : undefined}
         style={{
           transform: `translate(${zoom ? moveX : '0'}%, ${
             zoom ? moveY : '0'
