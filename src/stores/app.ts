@@ -20,7 +20,6 @@ import Config from '../config'
 export type ShortcutFn = (ev: KeyboardEvent) => void
 
 import messageSound from '../static/decision22.mp3'
-import { ArrayContext } from 'cafy'
 
 class SApp {
   readonly defaultTitle = 'Mozuku'
@@ -38,8 +37,6 @@ class SApp {
 
   @observable loggedIn: boolean = false
   @observable initialized: boolean = false
-
-  @observable supportedFormats: Map<string, boolean> = new Map()
 
   @observable accounts: Map<number, Account> = new Map()
   @observable posts: Map<number, Post> = new Map()
@@ -100,21 +97,6 @@ class SApp {
       alert('Check sea. You will be logged-out.')
       console.error(e)
       this.logout()
-    }
-  }
-
-  isFormatSupported(f: string) {
-    if (this.supportedFormats.get(f)) {
-      return this.supportedFormats.get(f)
-    } else {
-      const check = document
-        .createElement('canvas')
-        .toDataURL(f)
-        .indexOf(f)
-        ? true
-        : false
-      this.supportedFormats.set(f, check)
-      return check
     }
   }
 

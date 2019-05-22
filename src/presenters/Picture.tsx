@@ -2,7 +2,6 @@ import * as React from 'react'
 const { useState } = React
 
 import config from '../config'
-import appStore from '../stores/app'
 import AlbumFile from '../models/album'
 
 export default ({
@@ -34,14 +33,16 @@ export default ({
   return (
     <picture>
       {file.variants
-        .filter(
-          variant =>
-            variant.size <= config.image_maxsize &&
-            appStore.isFormatSupported(variant.mime)
-        )
+        .filter(variant => variant.size <= config.image_maxsize)
         .sort((a, b) => b.score - a.score)
         .map(variant => (
-          <source key={variant.id} srcSet={variant.url} type={variant.mime} />
+          <source
+            key={variant.id}
+            srcSet={`https://cdn.staticaly.com/img/${
+              variant.url.split('://')[1]
+            }`}
+            type={variant.mime}
+          />
         ))}
       <img
         style={{
