@@ -4287,7 +4287,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.7.2, prop-types@^15.6.0, prop-types@^15.6.2:
+prop-types@^15.6.0, prop-types@^15.6.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4411,13 +4411,6 @@ react-identicons@^1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/react-identicons/-/react-identicons-1.1.7.tgz#8dc8dc98fe3179874d481584cf99e1b3de8264f9"
   integrity sha512-r+nCigLoQMffpf8gZo6l0we8RaRkgEIeRY6xS1vjp5ANxdTd3QwA2tjBTfmgf+4kFqYnaL2XvJH+iZ4mKqnb8Q==
-
-react-image@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/react-image/-/react-image-2.1.1.tgz#325b3f9fe828347b6cc063a59bc8e27f1ca46b00"
-  integrity sha512-rUsmeLCOJlzy/LBW2s8JGC1VS0TSBUdLDCdTdU7u3AenHBQM0aTzL3gtLnOJaXpshFUAPZxaLrxgmD7d3qkUMA==
-  dependencies:
-    prop-types "15.7.2"
 
 react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.8.6"
