@@ -274,7 +274,7 @@ select {
 }
 
 .post-main {
-  display: inherit;
+  display: block;
 }
 
 .post-head {
