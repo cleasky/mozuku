@@ -240,13 +240,12 @@ select {
   padding: 12px 24px;
   border-top: 1px solid #eee;
   display: grid;
-  grid-template-columns: 10% 90%;
+  grid-template-columns: auto 1fr;
 }
 
 @media (max-width: 720px) {
   .post {
     padding: 12px 18px;
-    grid-template-columns: 20% 80%;
   }
 
   .emoji-mart {
