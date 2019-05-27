@@ -377,18 +377,18 @@ select {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0 0 4px;
+  margin: 0 0 2px;
 }
 
 .post__ogp a {
   text-decoration: none;
   display: grid;
-  color: #999;
 }
 
 .post__ogp__description {
   overflow: hidden;
   white-space: pre-wrap;
+  color: #999;
 }
 
 .post__meta {
