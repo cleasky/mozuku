@@ -7,6 +7,7 @@
   "license": "GPL-3.0",
   "private": true,
   "dependencies": {
+    "@types/emoji-mart": "^2.8.4",
     "@types/moment-timezone": "^0.5.12",
     "ahdin": "^1.1.0",
     "axios": "^0.18.0",
@@ -27,7 +28,8 @@
     "react-router-dom": "^5.0.0",
     "react-twemoji": "^0.1.0",
     "react-use-promise": "^0.2.0",
-    "sanitize.css": "^8.0.0"
+    "sanitize.css": "^8.0.0",
+    "ts-exif-parser": "^0.1.4"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
