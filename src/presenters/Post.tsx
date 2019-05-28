@@ -25,19 +25,13 @@ export default ({
   setOpenModal: (s: string | null) => void
 }) => {
   const [nameHidden, setNameHidden] = useState(false)
-  const formattedTime = moment(post.createdAt)
-    .tz('Asia/Tokyo')
-    .format()
+  const tzTime = moment(post.createdAt).tz('Asia/Tokyo')
+  const formattedTime = tzTime.format()
   const [showRelativeTime, setShowRelativeTime] = useState(true)
   const getRelativeTime = () => {
-    return moment(post.createdAt)
-      .tz('Asia/Tokyo')
-      .fromNow(true)
+    return tzTime.fromNow(true)
   }
   const [relativeTime, setRelativeTime] = useState(getRelativeTime())
-  setInterval(() => {
-    setRelativeTime(getRelativeTime())
-  }, 1000)
   useEffect(() => {
     const element = document.createElement('span')
     const text = document.createTextNode(post.author.name)
@@ -46,6 +40,13 @@ export default ({
     const putElement = document.body.appendChild(element)
     setNameHidden(!putElement.offsetWidth)
     document.body.removeChild(element)
+
+    const timeUpdate = setInterval(() => {
+      setRelativeTime(getRelativeTime())
+    }, 1000)
+    return () => {
+      clearInterval(timeUpdate)
+    }
   }, [])
   return (
     <Twemoji
