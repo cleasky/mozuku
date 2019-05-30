@@ -68,27 +68,27 @@ export default ({
       {modalImage && (
         <>
           <div className="post-image__modal__background" />
-          <div
+          <picture
             className="post-image__modal"
             onClick={() => {
               setModalImage(null)
               history.back()
             }}
           >
-            <picture>
-              {modalImage.variants.map(variant => (
+            {modalImage.variants
+              .sort((a, b) => b.score - a.score)
+              .map(variant => (
                 <source
                   key={variant.id}
                   srcSet={variant.url}
                   type={variant.mime}
                 />
               ))}
-              <img
-                className="post-image__modal__img"
-                onClick={e => window.open(e.currentTarget.currentSrc, '_blank')}
-              />
-            </picture>
-          </div>
+            <img
+              className="post-image__modal__img"
+              onClick={e => window.open(e.currentTarget.currentSrc, '_blank')}
+            />
+          </picture>
         </>
       )}
       <li className="timelineItem">

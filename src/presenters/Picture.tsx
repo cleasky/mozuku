@@ -48,10 +48,10 @@ export default ({
       .filter(
         variant => variant.type == 'image' && variant.mime == showing.mime
       )
-      .sort(variant => variant.score)
+      .sort((a, b) => b.score - a.score)
     const getAllFullSize = file.variants
       .filter(variant => variant.type == 'image')
-      .sort(variant => variant.score)
+      .sort((a, b) => b.score - a.score)
     const getFullSize = getSupportedFullSize.length
       ? getSupportedFullSize[0]
       : getAllFullSize[0]
