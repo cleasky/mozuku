@@ -17,13 +17,14 @@ import {
   BODYPART_TYPE_BOLD
 } from '../models'
 import config from '../config'
+import AlbumFile from '../models/album'
 
 export default ({
   post,
-  setOpenModal
+  setModalImage
 }: {
   post: Post
-  setOpenModal: (s: string | null) => void
+  setModalImage: (s: AlbumFile | null) => void
 }) => {
   const [nameHidden, setNameHidden] = useState(false)
   const tzTime = moment(post.createdAt).tz('Asia/Tokyo')
@@ -143,7 +144,7 @@ export default ({
                 <div className="post-image__img">
                   <Picture
                     file={file}
-                    setOpenModal={setOpenModal}
+                    setModalImage={setModalImage}
                     setImageSize={setImageSize}
                   />
                   <div className="post-image__anon">

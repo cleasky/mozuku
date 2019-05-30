@@ -3,15 +3,14 @@ const { useState } = React
 
 import config from '../config'
 import AlbumFile, { AlbumFileVariant } from '../models/album'
-import { getDiffieHellman } from 'crypto';
 
 export default ({
   file,
-  setOpenModal,
+  setModalImage,
   setImageSize
 }: {
   file: AlbumFile
-  setOpenModal: (s: string | null) => void
+  setModalImage: (s: AlbumFile | null) => void
   setImageSize: (s: number | null) => void
 }) => {
   const [moveX, setMoveX] = useState(0)
@@ -33,16 +32,13 @@ export default ({
     )
   }
   const [zoomEnabled, setZoomEnabled] = useState(false)
-  const [fullSize, setFullSize] = useState(null as AlbumFileVariant | null)
   const valid = file.variants
     .filter(variant => variant.size <= config.image_maxsize)
     .sort((a, b) => b.score - a.score)
   const onClick = () => {
     setZoom(false)
-    if (fullSize) {
-      history.pushState(history.state, file.name, `#image_${file.id}`)
-      setOpenModal(fullSize.url)
-    }
+    history.pushState(history.state, file.name, `#image_${file.id}`)
+    setModalImage(file)
   }
   const onLoad = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const showing = file.variants.filter(
@@ -59,7 +55,6 @@ export default ({
     const getFullSize = getSupportedFullSize.length
       ? getSupportedFullSize[0]
       : getAllFullSize[0]
-    setFullSize(getFullSize)
     setImageSize(getFullSize.size)
     if (showing.type != 'thumbnail') {
       setZoomEnabled(true)

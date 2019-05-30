@@ -2,6 +2,7 @@ import * as React from 'react'
 const { useState, useEffect } = React
 import { Post as PostModel } from '../../models'
 import Post from '../Post'
+import AlbumFile from '../../models/album'
 
 export default ({
   timeline,
@@ -12,10 +13,10 @@ export default ({
   readMore: () => void
   readMoreDisabled: boolean
 }) => {
-  const [openModal, setOpenModal] = useState(null as string | null)
+  const [modalImage, setModalImage] = useState(null as AlbumFile | null)
   useEffect(() => {
     const watchHistoryBack = () => {
-      setOpenModal(null)
+      setModalImage(null)
       return
     }
     window.addEventListener('popstate', watchHistoryBack)
@@ -61,24 +62,32 @@ export default ({
       )}
       {timeline.map(post => (
         <li className="timelineItem" key={post.id}>
-          <Post post={post} setOpenModal={setOpenModal} />
+          <Post post={post} setModalImage={setModalImage} />
         </li>
       ))}
-      {openModal && (
+      {modalImage && (
         <>
           <div className="post-image__modal__background" />
           <div
             className="post-image__modal"
             onClick={() => {
-              setOpenModal(null)
+              setModalImage(null)
               history.back()
             }}
           >
-            <img
-              className="post-image__modal__img"
-              src={openModal}
-              onClick={() => window.open(openModal, '_blank')}
-            />
+            <picture>
+              {modalImage.variants.map(variant => (
+                <source
+                  key={variant.id}
+                  srcSet={variant.url}
+                  type={variant.mime}
+                />
+              ))}
+              <img
+                className="post-image__modal__img"
+                onClick={e => window.open(e.currentTarget.currentSrc, '_blank')}
+              />
+            </picture>
           </div>
         </>
       )}
