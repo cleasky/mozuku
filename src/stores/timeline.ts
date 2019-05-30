@@ -111,10 +111,12 @@ class TimelineStore {
     this.unshift(...timeline)
   }
   async readMore() {
-    if (this.ids.length >= 100) return alert('これ以上は動かないよ!')
-    // after query 実装するまでは count=100 で誤魔化す
+    const query = new URLSearchParams()
+    if (this.ids.length) {
+      query.set('maxId', this.ids.slice(-1)[0].toString())
+    }
     const timeline = await seaClient
-      .get('/v1/timelines/public?count=100')
+      .get('/v1/timelines/public' + `?${query.toString()}`)
       .then((tl: any) => {
         if (!Array.isArray(tl)) throw new Error('?')
         return tl
