@@ -1,10 +1,11 @@
 import * as React from 'react'
 const { forwardRef, useState } = React
 import Twemoji from 'react-twemoji'
-import { Picker } from 'emoji-mart'
+import NimblePicker from 'emoji-mart/dist-es/components/picker/nimble-picker'
 import AlbumFile from '../../models/album'
 
 import Config from '../../config'
+import Axios from 'axios'
 
 type T = {
   draftDisabled: boolean
@@ -55,6 +56,20 @@ export default forwardRef<HTMLTextAreaElement, T>(
       submitAlbumFromFile(e)
     }
     const [emojiP, setEmojiP] = useState(false)
+    const [emojiData, setEmojiData] = useState(null as any)
+    const setupEmoji = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
+      e.preventDefault()
+      if (!emojiData) {
+        Axios.get('https://unpkg.com/emoji-mart@2.11.1/data/twitter.json').then(
+          res => {
+            setEmojiData(res.data)
+            setEmojiP(true)
+          }
+        )
+      } else {
+        setEmojiP(true)
+      }
+    }
 
     return (
       <>
@@ -82,9 +97,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
 
         <div className="postForm__images-area">
           <label
-            onClick={() => {
-              setEmojiP(!emojiP)
-            }}
+            onClick={setupEmoji}
             className="postForm__images-area__form__label"
           >
             <Twemoji>😄</Twemoji>
@@ -92,9 +105,11 @@ export default forwardRef<HTMLTextAreaElement, T>(
           {emojiP ? (
             <>
               <div className="emoji-mart-container">
-                <Picker
+                <NimblePicker
                   set="twitter"
+                  data={emojiData}
                   native={true}
+                  sheetSize={16}
                   title=""
                   onClick={(emj: any) => {
                     setDraft(`${draft}${emj.native}`)
