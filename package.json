@@ -7,8 +7,6 @@
   "license": "GPL-3.0",
   "private": true,
   "dependencies": {
-    "@types/emoji-mart": "^2.8.4",
-    "@types/filesize": "^4.1.0",
     "ahdin": "^1.1.0",
     "axios": "^0.18.0",
     "cafy": "^15.1.1",
@@ -29,11 +27,12 @@
     "react-router-dom": "^5.0.0",
     "react-twemoji": "^0.1.0",
     "react-use-promise": "^0.2.0",
-    "sanitize.css": "^8.0.0",
-    "ts-exif-parser": "^0.1.4"
+    "sanitize.css": "^8.0.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/emoji-mart": "^2.8.4",
+    "@types/filesize": "^4.1.0",
     "@types/node": "^11.13.8",
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.8.4",
