@@ -1,6 +1,8 @@
 import * as React from 'react'
+const { useState } = React
 import { Moment } from 'moment'
 import Twemoji from 'react-twemoji'
+import filesize from 'filesize'
 
 import Config from '../config'
 import AlbumFile from '../models/album'
@@ -23,6 +25,8 @@ export default ({
   onClickLogout: (e: React.MouseEvent<HTMLButtonElement>) => void
   commitState: any
 }) => {
+  const [maxSize, setMaxSize] = useState(Config.image_maxsize)
+
   return (
     <Twemoji
       options={{
@@ -107,22 +111,25 @@ export default ({
           </label>
         </form>
         <form>
-          <label>
-            読み込む最大画像サイズ:
+          <label className="settingsItem__label">
+            最大画像サイズ:{' '}
             <input
               name="image_maxsize"
               type="number"
               defaultValue={Config.image_maxsize}
               onChange={e => {
-                const maxsize = parseInt(e.target.value)
+                const inMaxSize = parseInt(e.target.value)
+                setMaxSize(inMaxSize)
+                Config.image_maxsize = inMaxSize
                 localStorage.setItem(
                   'Mozukusu::AppPreference::ImageMaxsize',
-                  JSON.stringify(maxsize)
+                  JSON.stringify(inMaxSize)
                 )
               }}
             />
           </label>
         </form>
+        <span>= {filesize(maxSize)}</span>
         <div className="settingsItem__subtitle">Info</div>
         <ul>
           <li>

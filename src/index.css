@@ -457,6 +457,12 @@ select {
   vertical-align: middle;
 }
 
+.settingsItem__label input[type='number'] {
+  border: 1px solid #999;
+  padding: 4px;
+  width: 128px;
+}
+
 .checkbox {
   margin: 6px;
   -webkit-appearance: checkbox;
