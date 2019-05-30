@@ -1,5 +1,4 @@
 import $ from 'cafy'
-import moment, { Moment } from 'moment'
 import Model, { validateDate } from './_model'
 
 import Application from './application'
@@ -162,8 +161,8 @@ export class PostBody {
 export default class Post implements Model {
   id: number
   text: string
-  createdAt: Moment
-  updatedAt: Moment
+  createdAt: Date
+  updatedAt: Date
 
   body: PostBody
   application: Application
@@ -194,8 +193,8 @@ export default class Post implements Model {
     this.id = post.id
     this.text = post.text
     this.body = body
-    this.createdAt = moment(post.createdAt)
-    this.updatedAt = moment(post.updatedAt)
+    this.createdAt = new Date(post.createdAt)
+    this.updatedAt = new Date(post.updatedAt)
     this.application = app
     this.author = account
     this.files = post.files.map((file: any) => new AlbumFile(file))
@@ -205,8 +204,8 @@ export default class Post implements Model {
     return {
       id: this.id,
       text: this.text,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
+      createdAt: this.createdAt.toISOString(),
+      updatedAt: this.updatedAt.toISOString(),
       user: this.author.unpack(),
       application: this.application.unpack(),
       files: this.files.map(file => file.unpack())

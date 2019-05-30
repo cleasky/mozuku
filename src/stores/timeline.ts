@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { observable, computed, action } from 'mobx'
 
 import $ from 'cafy'
-import moment from 'moment'
+import { differenceInSeconds } from 'date-fns'
 
 import app from './app'
 
@@ -142,8 +142,11 @@ class TimelineStore {
           await reconnect()
         }
 
-        if (this.streamConnected) {
-          const sec = moment().diff(this.streamLastPingFromServer, 'second')
+        if (this.streamConnected && this.streamLastPingFromServer) {
+          const sec = differenceInSeconds(
+            new Date(),
+            this.streamLastPingFromServer
+          )
           if (sec > 60) {
             this.streamConnected = false
             await reconnect()

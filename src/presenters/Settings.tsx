@@ -1,6 +1,5 @@
 import * as React from 'react'
 const { useState } = React
-import { Moment } from 'moment'
 import Twemoji from 'react-twemoji'
 import filesize from 'filesize'
 
@@ -20,7 +19,7 @@ export default ({
 }: {
   name: string
   screenName: string
-  createdAt: Moment
+  createdAt: Date
   avatar: AlbumFile | null
   onClickLogout: (e: React.MouseEvent<HTMLButtonElement>) => void
   commitState: any

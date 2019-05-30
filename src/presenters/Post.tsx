@@ -1,7 +1,8 @@
 import * as React from 'react'
 const { useState, useEffect } = React
 import Twemoji from 'react-twemoji'
-import moment from 'moment-timezone'
+import { format } from 'date-fns-tz'
+import { formatDistance } from 'date-fns'
 import filesize from 'filesize'
 
 import OGP from './OGP'
@@ -27,11 +28,12 @@ export default ({
   setModalImage: (s: AlbumFile | null) => void
 }) => {
   const [nameHidden, setNameHidden] = useState(false)
-  const tzTime = moment(post.createdAt).tz('Asia/Tokyo')
-  const formattedTime = tzTime.format()
+  const formattedTime = format(post.createdAt, 'HH:mm:ss · d MMM yyyy', {
+    timeZone: 'Asia/Tokyo'
+  })
   const [showRelativeTime, setShowRelativeTime] = useState(true)
   const getRelativeTime = () => {
-    return tzTime.fromNow(true)
+    return formatDistance(post.createdAt, new Date(), { includeSeconds: true })
   }
   const [relativeTime, setRelativeTime] = useState(getRelativeTime())
   const [imageSize, setImageSize] = useState(0 as number | null)

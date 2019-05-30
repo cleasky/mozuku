@@ -1,5 +1,4 @@
 import $ from 'cafy'
-import moment, { Moment } from 'moment'
 import Model, { validateDate } from './_model'
 import AlbumFile from './album'
 
@@ -9,8 +8,8 @@ export default class Account implements Model {
   screenName: string
   postsCount: number
   avatarFile: AlbumFile | null
-  createdAt: Moment
-  updatedAt: Moment
+  createdAt: Date
+  updatedAt: Date
 
   private validate(user: any) {
     return $.obj({
@@ -31,8 +30,8 @@ export default class Account implements Model {
     this.screenName = user.screenName
     this.postsCount = user.postsCount
     this.avatarFile = user.avatarFile
-    this.createdAt = moment(user.createdAt)
-    this.updatedAt = moment(user.updatedAt)
+    this.createdAt = new Date(user.createdAt)
+    this.updatedAt = new Date(user.updatedAt)
   }
 
   unpack() {
@@ -42,8 +41,8 @@ export default class Account implements Model {
       screenName: this.screenName,
       postsCount: this.postsCount,
       avatarFile: this.avatarFile,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt
+      createdAt: this.createdAt.toISOString(),
+      updatedAt: this.updatedAt.toISOString()
     }
   }
 }

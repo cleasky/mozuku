@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { Moment } from 'moment'
 
 export default ({
   name,
@@ -8,7 +7,7 @@ export default ({
 }: {
   name: string
   screenName: string
-  createdAt: Moment
+  createdAt: Date
 }) => {
   return (
     <>
