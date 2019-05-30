@@ -2,6 +2,7 @@ import * as React from 'react'
 const { useState, useEffect } = React
 import Twemoji from 'react-twemoji'
 import moment from 'moment-timezone'
+import filesize from 'filesize'
 
 import OGP from './OGP'
 import Picture from './Picture'
@@ -32,6 +33,7 @@ export default ({
     return tzTime.fromNow(true)
   }
   const [relativeTime, setRelativeTime] = useState(getRelativeTime())
+  const [imageSize, setImageSize] = useState(0 as number | null)
   useEffect(() => {
     const element = document.createElement('span')
     const text = document.createTextNode(post.author.name)
@@ -139,7 +141,14 @@ export default ({
             {post.files.map(file => (
               <React.Fragment key={file.id}>
                 <div className="post-image__img">
-                  <Picture file={file} setOpenModal={setOpenModal} />
+                  <Picture
+                    file={file}
+                    setOpenModal={setOpenModal}
+                    setImageSize={setImageSize}
+                  />
+                  <div className="post-image__anon">
+                    <p>{imageSize && filesize(imageSize)}</p>
+                  </div>
                 </div>
               </React.Fragment>
             ))}

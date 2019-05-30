@@ -6,10 +6,12 @@ import AlbumFile from '../models/album'
 
 export default ({
   file,
-  setOpenModal
+  setOpenModal,
+  setImageSize
 }: {
   file: AlbumFile
   setOpenModal: (s: string | null) => void
+  setImageSize: (s: number | null) => void
 }) => {
   const [moveX, setMoveX] = useState(0)
   const [moveY, setMoveY] = useState(0)
@@ -32,6 +34,22 @@ export default ({
   const valid = file.variants
     .filter(variant => variant.size <= config.image_maxsize)
     .sort((a, b) => b.score - a.score)
+  const fullSizes = file.variants.filter(variant => variant.type == 'image')
+  const variantFromUrl = (imageUrl: string) => {
+    return file.variants.filter(variant => variant.url == imageUrl)[0]
+  }
+  const onClick = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+    setZoom(false)
+    const supportedMime = variantFromUrl(e.currentTarget.currentSrc).mime
+    const toOpenVariant = fullSizes
+      .filter(variant => variant.mime == supportedMime)
+      .sort(variant => variant.score)[0]
+    history.pushState(history.state, file.name, `#image_${file.id}`)
+    setOpenModal(toOpenVariant.url)
+  }
+  const onLoad = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    setImageSize(variantFromUrl(e.currentTarget.currentSrc).size)
+  }
 
   return (
     <picture>
@@ -46,22 +64,8 @@ export default ({
           }%) scale(${zoom ? '2' : '1'})`
         }}
         title={file.name}
-        onClick={e => {
-          setZoom(false)
-          const mime = file.variants.filter(
-            variant =>
-              e.currentTarget.currentSrc.split('album_files')[1] ==
-              variant.url.split('album_files')[1]
-          )[0].mime
-          const imex = file.variants.filter(
-            variant => variant.mime == mime && variant.type == 'image'
-          )
-          const urlToOpen = imex.length
-            ? imex[0].url
-            : e.currentTarget.currentSrc
-          history.pushState(history.state, file.name, `#image_${file.id}`)
-          setOpenModal(urlToOpen)
-        }}
+        onClick={onClick}
+        onLoad={onLoad}
         onMouseLeave={() => setZoom(false)}
         onMouseMove={e => setXY(e)}
       />
