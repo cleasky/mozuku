@@ -2,7 +2,8 @@ import * as React from 'react'
 const { useState } = React
 
 import config from '../config'
-import AlbumFile from '../models/album'
+import AlbumFile, { AlbumFileVariant } from '../models/album'
+import { getDiffieHellman } from 'crypto';
 
 export default ({
   file,
@@ -31,24 +32,38 @@ export default ({
           100
     )
   }
+  const [zoomEnabled, setZoomEnabled] = useState(false)
+  const [fullSize, setFullSize] = useState(null as AlbumFileVariant | null)
   const valid = file.variants
     .filter(variant => variant.size <= config.image_maxsize)
     .sort((a, b) => b.score - a.score)
-  const fullSizes = file.variants.filter(variant => variant.type == 'image')
-  const variantFromUrl = (imageUrl: string) => {
-    return file.variants.filter(variant => variant.url == imageUrl)[0]
-  }
-  const onClick = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+  const onClick = () => {
     setZoom(false)
-    const supportedMime = variantFromUrl(e.currentTarget.currentSrc).mime
-    const toOpenVariant = fullSizes
-      .filter(variant => variant.mime == supportedMime)
-      .sort(variant => variant.score)[0]
-    history.pushState(history.state, file.name, `#image_${file.id}`)
-    setOpenModal(toOpenVariant.url)
+    if (fullSize) {
+      history.pushState(history.state, file.name, `#image_${file.id}`)
+      setOpenModal(fullSize.url)
+    }
   }
   const onLoad = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    setImageSize(variantFromUrl(e.currentTarget.currentSrc).size)
+    const showing = file.variants.filter(
+      variant => variant.url == e.currentTarget.currentSrc
+    )[0]
+    const getSupportedFullSize = file.variants
+      .filter(
+        variant => variant.type == 'image' && variant.mime == showing.mime
+      )
+      .sort(variant => variant.score)
+    const getAllFullSize = file.variants
+      .filter(variant => variant.type == 'image')
+      .sort(variant => variant.score)
+    const getFullSize = getSupportedFullSize.length
+      ? getSupportedFullSize[0]
+      : getAllFullSize[0]
+    setFullSize(getFullSize)
+    setImageSize(getFullSize.size)
+    if (showing.type != 'thumbnail') {
+      setZoomEnabled(true)
+    }
   }
 
   return (
@@ -58,11 +73,15 @@ export default ({
       ))}
       <img
         src={valid.length ? valid[0].url : undefined}
-        style={{
-          transform: `translate(${zoom ? moveX : '0'}%, ${
-            zoom ? moveY : '0'
-          }%) scale(${zoom ? '2' : '1'})`
-        }}
+        style={
+          zoomEnabled
+            ? {
+                transform: `translate(${zoom ? moveX : '0'}%, ${
+                  zoom ? moveY : '0'
+                }%) scale(${zoom ? '2' : '1'})`
+              }
+            : {}
+        }
         title={file.name}
         onClick={onClick}
         onLoad={onLoad}
