@@ -77,10 +77,14 @@ export default ({
             ![1, 2].includes(post.displayType) ? { opacity: 0, height: 0 } : {}
           }
         >
-          {post.author.avatarFile ? (
-            <Icon avatar={post.author.avatarFile} />
+          {[1, 2].includes(post.displayType) ? (
+            post.author.avatarFile ? (
+              <Icon avatar={post.author.avatarFile} />
+            ) : (
+              <Identicon string={post.author.screenName} size={50} />
+            )
           ) : (
-            <Identicon string={post.author.screenName} size={50} />
+            <canvas />
           )}
         </div>
         <div className="post-main">
