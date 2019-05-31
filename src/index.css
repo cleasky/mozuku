@@ -243,9 +243,37 @@ select {
   grid-template-columns: auto 1fr;
 }
 
+.post-multiStart {
+  padding: 12px 24px 4px;
+}
+
+.post-multi {
+  border-top: none;
+  padding: 0px 24px;
+}
+
+.post-multiEnd {
+  border-top: none;
+  padding: 4px 24px 12px;
+}
+
 @media (max-width: 720px) {
   .post {
     padding: 12px 18px;
+  }
+
+  .post-multiStart {
+    padding: 12px 24px 4px;
+  }
+
+  .post-multi {
+    border-top: none;
+    padding: 0px 24px;
+  }
+
+  .post-multiEnd {
+    border-top: none;
+    padding: 4px 24px 12px;
   }
 
   .emoji-mart {

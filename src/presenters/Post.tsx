@@ -66,8 +66,17 @@ export default ({
       }}
     >
       <div id="namecheck" />
-      <div className="post">
-        <div className="post-icon">
+      <div
+        className={`post ${post.displayType == 2 &&
+          'post-multiStart'} ${post.displayType == 3 &&
+          'post-multi'} ${post.displayType == 4 && 'post-multiEnd'}`}
+      >
+        <div
+          className="post-icon"
+          style={
+            ![1, 2].includes(post.displayType) ? { opacity: 0, height: 0 } : {}
+          }
+        >
           {post.author.avatarFile ? (
             <Icon avatar={post.author.avatarFile} />
           ) : (
@@ -75,7 +84,12 @@ export default ({
           )}
         </div>
         <div className="post-main">
-          <div className="post-head">
+          <div
+            className="post-head"
+            style={
+              ![1, 2].includes(post.displayType) ? { display: 'none' } : {}
+            }
+          >
             <div className="post-head__name">
               <span className="post-head__name__name" hidden={nameHidden}>
                 {post.author.name}

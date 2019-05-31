@@ -168,6 +168,7 @@ export default class Post implements Model {
   application: Application
   author: Account
   files: AlbumFile[]
+  displayType: number
 
   private validate(post: any) {
     return $.obj({
@@ -198,6 +199,7 @@ export default class Post implements Model {
     this.application = app
     this.author = account
     this.files = post.files.map((file: any) => new AlbumFile(file))
+    this.displayType = 1
   }
 
   unpack() {

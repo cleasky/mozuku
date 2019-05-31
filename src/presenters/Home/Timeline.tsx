@@ -60,11 +60,40 @@ export default ({
           )
         }
       )}
-      {timeline.map(post => (
-        <li className="timelineItem" key={post.id}>
-          <Post post={post} setModalImage={setModalImage} />
-        </li>
-      ))}
+      {timeline
+        .reduce(
+          (acc, cur, idx, arr) => {
+            if (0 < idx) {
+              if (arr[idx - 1].author.id == cur.author.id) {
+                const prev = acc[acc.length - 1]
+                if (prev && prev.displayType == 1) {
+                  prev.displayType = 2
+                  acc.pop()
+                  acc.push(prev)
+                }
+                if (
+                  arr.length == idx ||
+                  (arr[idx + 1] && arr[idx + 1].author.id != cur.author.id)
+                ) {
+                  cur.displayType = 4
+                } else {
+                  cur.displayType = 3
+                }
+                acc.push(cur)
+                return acc
+              }
+            }
+            acc.push(cur)
+
+            return acc
+          },
+          [] as PostModel[]
+        )
+        .map((post: PostModel) => (
+          <li className="timelineItem" key={post.id}>
+            <Post post={post} setModalImage={setModalImage} />
+          </li>
+        ))}
       {modalImage && (
         <>
           <div className="post-image__modal__background" />
