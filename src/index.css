@@ -263,17 +263,17 @@ select {
   }
 
   .post-multiStart {
-    padding: 12px 24px 4px;
+    padding: 12px 18px 4px;
   }
 
   .post-multi {
     border-top: none;
-    padding: 0px 24px;
+    padding: 0px 18px;
   }
 
   .post-multiEnd {
     border-top: none;
-    padding: 4px 24px 12px;
+    padding: 4px 18px 12px;
   }
 
   .emoji-mart {
