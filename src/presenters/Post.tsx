@@ -28,12 +28,14 @@ export default ({
   setModalImage: (s: AlbumFile | null) => void
 }) => {
   const [nameHidden, setNameHidden] = useState(false)
-  const formattedTime = format(post.createdAt, 'HH:mm:ss · d MMM yyyy', {
+  const formattedTime = format(post.createdAt, 'yyyy/MM/dd HH:mm:ss', {
     timeZone: 'Asia/Tokyo'
   })
   const [showRelativeTime, setShowRelativeTime] = useState(true)
   const getRelativeTime = () => {
-    return formatDistance(post.createdAt, new Date(), { includeSeconds: true })
+    return formatDistance(post.createdAt, new Date(), {
+      includeSeconds: true
+    }).replace('less than', '>')
   }
   const [relativeTime, setRelativeTime] = useState(getRelativeTime())
   const [imageSize, setImageSize] = useState(0 as number | null)

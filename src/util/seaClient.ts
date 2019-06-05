@@ -79,7 +79,8 @@ export class SeaClient {
       headers: {
         Authorization: `${this.tokenType} ${this.token}`,
         'Content-Type': 'application/json'
-      }
+      },
+      timeout: 5000
     })
   }
 
