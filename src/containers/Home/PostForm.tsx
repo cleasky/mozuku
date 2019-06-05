@@ -53,12 +53,14 @@ export default () => {
         const reader = new FileReader()
         reader.onloadend = () => {
           if (reader.result != null) {
-            const blob = new Blob([new Uint8Array(reader.result)])
+            const blob = new Blob([
+              new Uint8Array(reader.result as ArrayBuffer)
+            ])
             Ahdin.compress(blob)
-              .then(comp => {
+              .then((comp: Blob) => {
                 resolve(new File([comp], file.name))
               })
-              .catch(err => {
+              .catch((err: Error) => {
                 console.error(err)
                 resolve(file)
               })
@@ -68,14 +70,14 @@ export default () => {
       } else {
         resolve(file)
       }
-    }).then(uploadTarget => {
+    }).then((uploadTarget: any) => {
       const form = new FormData()
       form.append('file', uploadTarget)
       form.append('name', uploadTarget.name)
       form.append('ifNameConflicted', 'add-date-string')
       setUploadStatus('画像をアップロードしています…')
       seaClient
-        .post('/v1/album/files', form)
+        .post('/v1/album/files', form, true)
         .then(file => {
           setImages(images => [...images, file])
           setIsUploading(false)

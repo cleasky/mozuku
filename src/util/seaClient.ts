@@ -96,9 +96,13 @@ export class SeaClient {
       .then(r => r.data)
   }
 
-  post(path: string, data: any) {
+  post(path: string, data: any, revertTimeout: boolean = false) {
     return this.createAxiosInstance()
-      .post(this.genApiHref(path), data)
+      .post(
+        this.genApiHref(path),
+        data,
+        revertTimeout ? { timeout: 60000 } : {}
+      )
       .then(r => r.data)
   }
 
