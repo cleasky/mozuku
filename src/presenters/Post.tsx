@@ -103,6 +103,9 @@ export default ({
               <span className="post-head__name__screenName">
                 @{post.author.screenName}
               </span>
+              {post.application.is_automated && (
+                <span className="post-head__name__label">Bot</span>
+              )}
             </div>
             <div
               className="post-head__time"
