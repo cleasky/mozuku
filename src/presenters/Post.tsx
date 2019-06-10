@@ -83,7 +83,7 @@ export default ({
             post.author.avatarFile ? (
               <Icon avatar={post.author.avatarFile} />
             ) : (
-              <Identicon string={post.author.screenName} size={50} />
+              <Identicon string={post.author.screenName} size={42} />
             )
           ) : (
             <canvas />
