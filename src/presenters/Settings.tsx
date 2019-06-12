@@ -1,5 +1,6 @@
 import * as React from 'react'
 const { useState } = React
+// @ts-ignore
 import Twemoji from 'react-twemoji'
 import filesize from 'filesize'
 
@@ -7,6 +8,7 @@ import Config from '../config'
 import AlbumFile from '../models/album'
 import NameForm from '../containers/Settings/NameForm'
 import AvatarForm from '../containers/Settings/AvatarForm'
+// @ts-ignore
 import verified from '../static/verified.svg'
 
 export default ({
@@ -15,7 +17,10 @@ export default ({
   createdAt,
   avatar,
   onClickLogout,
-  commitState
+  commitState,
+  subscriptionState,
+  subscriptionButtonMessages,
+  subscribe
 }: {
   name: string
   screenName: string
@@ -23,6 +28,9 @@ export default ({
   avatar: AlbumFile | null
   onClickLogout: (e: React.MouseEvent<HTMLButtonElement>) => void
   commitState: any
+  subscriptionState: number
+  subscriptionButtonMessages: string[]
+  subscribe: () => void
 }) => {
   const [maxSize, setMaxSize] = useState(Config.image_maxsize)
 
@@ -52,6 +60,14 @@ export default ({
         <div className="settingsItem__subtitle">Session</div>
         <button className="settingsItem__logout" onClick={onClickLogout}>
           Logout
+        </button>
+        <div className="settingsItem__title">WebPush</div>
+        <button
+          className="settingsItem__logout"
+          disabled={1 != subscriptionState}
+          onClick={subscribe}
+        >
+          {subscriptionButtonMessages[subscriptionState]}
         </button>
         <div className="settingsItem__title">Client</div>
         <div className="settingsItem__subtitle">Settings</div>

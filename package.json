@@ -39,11 +39,16 @@
     "@types/react-router": "^4.4.5",
     "@types/react-router-dom": "^4.3.2",
     "parcel-plugin-bundle-visualiser": "^1.2.0",
+    "parcel-plugin-sw-precache": "^1.1.1",
     "typescript": "^3.4.5"
   },
   "scripts": {
     "start": "parcel src/index.html",
-    "remote": "NODE_ENV=remote parcel src/index.html",
+    "local": "NODE_ENV=local parcel src/index.html",
     "format": "prettier --write \"./src/**/*.{html,css,ts,tsx}\""
+  },
+  "sw-precache": {
+    "maximumFileSizeToCacheInBytes": 0,
+    "additionalCodeFile": "service-worker.js"
   }
 }

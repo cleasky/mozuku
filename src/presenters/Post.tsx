@@ -1,5 +1,6 @@
 import * as React from 'react'
 const { useState, useEffect } = React
+// @ts-ignore
 import Twemoji from 'react-twemoji'
 import { format } from 'date-fns-tz'
 import { formatDistance } from 'date-fns'
@@ -8,7 +9,9 @@ import filesize from 'filesize'
 import OGP from './OGP'
 import Picture from './Picture'
 import Icon from './Icon'
+// @ts-ignore
 import Identicon from 'react-identicons'
+// @ts-ignore
 import verified from '../static/verified.svg'
 
 import {
@@ -17,7 +20,6 @@ import {
   BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_BOLD
 } from '../models'
-import config from '../config'
 import AlbumFile from '../models/album'
 
 export default ({
