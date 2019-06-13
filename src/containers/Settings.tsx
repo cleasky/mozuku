@@ -36,29 +36,40 @@ export default () => {
         applicationServerKey: applicationServerKey
       })
       await seaClient.post('/v1/webpush/subscriptions', JSON.stringify(payload))
-      const count = await seaClient.get('/v1/webpush/subscriptions')
-      setSubscriptionCount(count.length)
       setSubscriptionState(3)
     } else {
-      subscription.unsubscribe().then(() => {
-        setSubscriptionState(1)
-      })
+      await subscription.unsubscribe()
+      setSubscriptionState(1)
     }
+    const count = await seaClient.get('/v1/webpush/subscriptions')
+    setSubscriptionCount(count.length)
   }
   useEffect(() => {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
       ;(async () => {
         const sw = await navigator.serviceWorker.register('/service-worker.js')
-        ;(await sw.pushManager.getSubscription()) != null
-          ? setSubscriptionState(3)
-          : setSubscriptionState(1)
         try {
           const server_key = await seaClient.get('/v1/webpush/server_key')
           setApplicationServerKey(
             urlB64ToUint8Array(server_key.applicationServerKey)
           )
-          const count = await seaClient.get('/v1/webpush/subscriptions')
-          setSubscriptionCount(count.length)
+          const subscription = await sw.pushManager.getSubscription()
+          const remote = await seaClient.get('/v1/webpush/subscriptions')
+          setSubscriptionCount(remote.length)
+          if (subscription != null) {
+            if (
+              !remote.filter(
+                (rsub: any) => rsub.endpoint == subscription.endpoint
+              )
+            ) {
+              await subscription.unsubscribe()
+              setSubscriptionState(1)
+            } else {
+              setSubscriptionState(3)
+            }
+          } else {
+            setSubscriptionState(1)
+          }
         } catch (error) {
           console.warn('webpush is not supported on upstream')
           setSubscriptionState(0)

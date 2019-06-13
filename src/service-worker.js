@@ -1,9 +1,11 @@
 self.addEventListener('push', event => {
   const parsed = JSON.parse(event.data.text())
-  const title = parsed.title
+  console.log(parsed)
+  const post = parsed.post
+  const title = `${post.user.name} (@${post.user.screenName}) replied`
   const options = {
-    body: parsed.body,
-    icon: parsed.icon
+    body: post.text,
+    icon: post.user.icon
   }
 
   event.waitUntil(self.registration.showNotification(title, options))
