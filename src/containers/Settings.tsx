@@ -35,11 +35,9 @@ export default () => {
         userVisibleOnly: true,
         applicationServerKey: applicationServerKey
       })
-      const request = await seaClient.post(
-        '/v1/webpush/subscriptions',
-        JSON.stringify(payload)
-      )
-      setSubscriptionCount(request.subscriptions)
+      await seaClient.post('/v1/webpush/subscriptions', JSON.stringify(payload))
+      const count = await seaClient.get('/v1/webpush/subscriptions')
+      setSubscriptionCount(count.length)
       setSubscriptionState(3)
     } else {
       subscription.unsubscribe().then(() => {
@@ -60,7 +58,7 @@ export default () => {
             urlB64ToUint8Array(server_key.applicationServerKey)
           )
           const count = await seaClient.get('/v1/webpush/subscriptions')
-          setSubscriptionCount(count.subscriptions)
+          setSubscriptionCount(count.length)
         } catch (error) {
           console.warn('webpush is not supported on upstream')
           setSubscriptionState(0)
