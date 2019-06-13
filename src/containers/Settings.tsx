@@ -13,46 +13,55 @@ import { urlB64ToUint8Array } from '../util/urlB64ToUint8Array'
 
 export default () => {
   const [commitState, setCommitState] = useState({})
+  const [subscriptionCount, setSubscriptionCount] = useState(0)
   const [subscriptionState, setSubscriptionState] = useState(2)
   const subscriptionMessages = [
     'not supported',
     'subscribe',
     'loading...',
-    'subscribed'
+    'unsubscribe'
   ]
-  const [SWR, setSWR] = useState()
+  const [SWR, setSWR] = useState(null as ServiceWorkerRegistration | null)
+  const [applicationServerKey, setApplicationServerKey] = useState(
+    null as Uint8Array | null
+  )
   const subscribe = async () => {
-    setSubscriptionState(2)
-    const upstream = await seaClient.get('/v1/subscriptions')
-    if (upstream.is_enabled) {
-      const serverKey = urlB64ToUint8Array(upstream.applicationServerKey)
+    if (SWR == null) return
+    if (applicationServerKey === null) return
+    const subscription = await SWR.pushManager.getSubscription()
+    if (subscription === null) {
+      setSubscriptionState(2)
       const payload = await SWR.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: serverKey
+        applicationServerKey: applicationServerKey
       })
-      const dumped = JSON.stringify(payload)
-      const subscribe = await seaClient.post('/v1/subscriptions', dumped)
+      await seaClient.post('/v1/subscriptions', JSON.stringify(payload))
       setSubscriptionState(3)
+    } else {
+      subscription.unsubscribe().then(() => {
+        setSubscriptionState(1)
+      })
     }
-    return
   }
   useEffect(() => {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
-      navigator.serviceWorker
-        .register('/service-worker.js')
-        .then(sw => {
-          sw.pushManager.getSubscription().then(subscription => {
-            if (subscription === null) {
-              setSubscriptionState(1)
-            } else {
-              setSubscriptionState(3)
-            }
-          })
-          setSWR(sw)
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      ;(async () => {
+        const sw = await navigator.serviceWorker.register('/service-worker.js')
+        ;(await sw.pushManager.getSubscription()) != null
+          ? setSubscriptionState(3)
+          : setSubscriptionState(1)
+        try {
+          const upstream = await seaClient.get('/v1/subscriptions')
+          setApplicationServerKey(
+            urlB64ToUint8Array(upstream.applicationServerKey)
+          )
+          setSubscriptionCount(upstream.subscriptions)
+        } catch (error) {
+          console.warn('webpush is not supported on upstream')
+          setSubscriptionState(0)
+        }
+        setSWR(sw)
+      })()
     }
     if (Config.commit_fetch_url) {
       Axios.get(Config.commit_fetch_url).then(resp => {
@@ -74,6 +83,7 @@ export default () => {
           appStore.logout()
         }}
         commitState={commitState}
+        subscriptionCount={subscriptionCount}
         subscriptionState={subscriptionState}
         subscriptionButtonMessages={subscriptionMessages}
         subscribe={subscribe}

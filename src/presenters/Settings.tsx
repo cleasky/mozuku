@@ -18,6 +18,7 @@ export default ({
   avatar,
   onClickLogout,
   commitState,
+  subscriptionCount,
   subscriptionState,
   subscriptionButtonMessages,
   subscribe
@@ -28,6 +29,7 @@ export default ({
   avatar: AlbumFile | null
   onClickLogout: (e: React.MouseEvent<HTMLButtonElement>) => void
   commitState: any
+  subscriptionCount: number
   subscriptionState: number
   subscriptionButtonMessages: string[]
   subscribe: () => void
@@ -57,17 +59,19 @@ export default ({
         <NameForm name={name} />
         <div className="settingsItem__subtitle">Avatar</div>
         <AvatarForm avatarFile={avatar} />
-        <div className="settingsItem__subtitle">Session</div>
-        <button className="settingsItem__logout" onClick={onClickLogout}>
-          Logout
-        </button>
         <div className="settingsItem__title">WebPush</div>
         <button
-          className="settingsItem__logout"
-          disabled={1 != subscriptionState}
+          className="settingsItem__subscribe"
+          disabled={![1, 3].includes(subscriptionState)}
           onClick={subscribe}
         >
           {subscriptionButtonMessages[subscriptionState]}
+        </button>
+        <br />
+        Your currently subscriptions: {subscriptionCount}
+        <div className="settingsItem__subtitle">Session</div>
+        <button className="settingsItem__logout" onClick={onClickLogout}>
+          <span>Logout</span>
         </button>
         <div className="settingsItem__title">Client</div>
         <div className="settingsItem__subtitle">Settings</div>

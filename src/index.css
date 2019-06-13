@@ -493,11 +493,20 @@ select {
   margin: 8px 0 4px;
 }
 
+.settingsItem__subscribe {
+  width: 120px;
+  height: 24px;
+  background-color: var(--color-main);
+  color: #fff;
+  font-size: 0.8em;
+}
+
 .settingsItem__logout {
   width: 120px;
   height: 24px;
   background-color: var(--color-main);
   color: #fff;
+  background-color: red;
   font-size: 0.8em;
 }
 
