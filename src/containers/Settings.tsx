@@ -76,6 +76,8 @@ export default () => {
         }
         setSWR(sw)
       })()
+    } else {
+      setSubscriptionState(0)
     }
     if (Config.commit_fetch_url) {
       Axios.get(Config.commit_fetch_url).then(resp => {

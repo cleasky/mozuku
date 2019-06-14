@@ -116,10 +116,9 @@ class SApp {
         return [p]
       }
       const { screenName } = a
-      const target = '@' + screenName + ' '
-      const r = p.payload.split(new RegExp(`(${target})`, 'gi'))
+      const r = p.payload.split(new RegExp(/(@[A-Za-z0-9]+)[^A-Za-z0-9]*?/g))
       return r.map(t => {
-        if (t === target) {
+        if (t.includes(`@${screenName}`)) {
           if (Config.post_sound_reply) {
             try {
               new Audio(messageSound).play()
