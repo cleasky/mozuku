@@ -30,7 +30,7 @@ export default ({
           disabled={avatarDraftDisabled}
           onChange={onChange}
           placeholder="Your avatar's albumFile id"
-          value={avatarDraft ? avatarDraft : ''}
+          defaultValue={avatarDraft ? avatarDraft.toString() : ''}
         />
         <button
           className="nameForm__button"

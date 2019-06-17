@@ -13,13 +13,24 @@ export default ({ avatarFile }: { avatarFile: albumFile | null }) => {
     avatarFile ? avatarFile.id : (null as number | null)
   )
   const [avatarDraftDisabled, setAvatarDraftDisabled] = useState(false)
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState(
+    'If you want to delete your avatar, please input "0".'
+  )
   const submitAvatarDraft = async () => {
     setAvatarDraftDisabled(true)
     if ($.num.ok(avatarDraft)) {
       try {
-        await seaClient.patch('/v1/account', { avatarFileId: avatarDraft })
-        setMessage(`Your new avatar: ${avatarDraft}`)
+        const req = await seaClient.patch('/v1/account', {
+          avatarFileId: avatarDraft
+        })
+        if (req.avatarFile === null) {
+          setMessage(`Your avatar successfully deleted.`)
+        } else {
+          setMessage(
+            `Your new avatar: ${req.avatarFile.name} (${req.avatarFile.id})`
+          )
+        }
+
         appStore.updateMyAccount()
       } catch (e) {
         // TODO: Add error reporting
