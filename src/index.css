@@ -316,6 +316,8 @@ select {
   top: 0.5rem;
   z-index: 1;
   background-color: rgba(255, 255, 255, 0.7);
+  height: 1rem;
+  overflow: hidden;
 }
 
 .post-head__name {
@@ -332,7 +334,7 @@ select {
 }
 
 .post-head__name__label {
-  font-size: .8rem;
+  font-size: 0.8rem;
   color: #999;
   border: solid 1px;
   border-radius: 4px;
