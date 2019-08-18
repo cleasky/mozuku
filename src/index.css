@@ -316,7 +316,6 @@ select {
   top: 0.5rem;
   z-index: 1;
   background-color: rgba(255, 255, 255, 0.7);
-  height: 1rem;
   overflow: hidden;
 }
 
