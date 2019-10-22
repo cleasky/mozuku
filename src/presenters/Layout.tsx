@@ -4,6 +4,8 @@ import { Switch, Route } from 'react-router'
 import { Link } from 'react-router-dom'
 import Twemoji from 'react-twemoji'
 
+import Config from '../config'
+
 import { Account } from '../models'
 
 import Home from './Home'
@@ -43,6 +45,27 @@ export default ({ me }: { me?: Account }) => {
       </div>
 
       <div className="mozuku-container">
+        {!Config.notice_hidden && (
+          <div style={{ padding: '2em', backgroundColor: '#ff9800' }}>
+            mozukusu 強推奨利的 &nbsp;
+            <a href="https://mozuku.otofune.net">mozuku.otofune.net</a>
+            &nbsp;&nbsp;
+            <a
+              href="#"
+              onClick={() => {
+                Config.notice_hidden = true
+                localStorage.setItem(
+                  'Mozukusu::AppPreference::NoticeHidden',
+                  JSON.stringify(true)
+                )
+              }}
+            >
+              {' '}
+              delete this notice
+            </a>
+          </div>
+        )}
+
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/me" component={Me} />

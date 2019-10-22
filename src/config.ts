@@ -38,5 +38,9 @@ export default {
     JSON.parse(
       localStorage.getItem('Mozukusu::AppPreference::ImageCompression') ||
         'false'
+    ) || false,
+  notice_hidden:
+    JSON.parse(
+      localStorage.getItem('Mozukusu::AppPreference::NoticeHidden') || 'false'
     ) || false
 }
