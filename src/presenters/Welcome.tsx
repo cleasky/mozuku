@@ -22,6 +22,26 @@ export default ({ authURL }: { authURL: string }) => {
       </div>
 
       <div className="mozuku-container">
+        {!Config.notice_hidden && (
+          <div style={{ padding: '2em', backgroundColor: '#ff9800' }}>
+            mozukusu 強推奨利的 &nbsp;
+            <a href="https://mozuku.otofune.net">mozuku.otofune.net</a>
+            &nbsp;&nbsp;
+            <a
+              href="#"
+              onClick={() => {
+                Config.notice_hidden = true
+                localStorage.setItem(
+                  'Mozukusu::AppPreference::NoticeHidden',
+                  JSON.stringify(true)
+                )
+              }}
+            >
+              {' '}
+              delete this notice
+            </a>
+          </div>
+        )}
         <div className="mozuku-welcome__space">
           <div className="mozuku-welcome__title">Mozuku</div>
           <p>
