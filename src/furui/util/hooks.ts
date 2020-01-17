@@ -9,6 +9,7 @@ import {
   format
 } from 'date-fns'
 import riassumere, { interfaces as IRiassumere } from 'riassumere'
+import axios from 'axios'
 
 const Month = 'mo'
 const Week = 'w'
@@ -101,7 +102,10 @@ export const useOGP = (href: string) => {
       if (clawlCaches.has(href)) {
         return setResult(clawlCaches.get(href))
       }
-      const r = await riassumere(href)
+      const ricapitolare = await axios.get(
+        `https://ricapitolare.now.sh/fetch?uri=${href}`
+      )
+      const r = ricapitolare.data
       // あり得ないので無視
       if (Array.isArray(r)) return
       clawlCaches.set(href, r)

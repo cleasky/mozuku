@@ -54,7 +54,8 @@
     "clean": "rimraf \"{dist/*.{png,html,js,map,css},.cache}\"",
     "format": "yarn prettier --write",
     "prettier": "prettier \"./src/**/*.{html,css,pcss,ts,tsx}\"",
-    "test": "yarn prettier --check # && jest"
+    "test": "yarn prettier --check # && jest",
+    "now-build": "parcel build src/index.html --public-url /"
   },
   "husky": {
     "hooks": {

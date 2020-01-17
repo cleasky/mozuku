@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "name": "mozuku",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/.*",
+      "dest": "index.html"
+    }
+  ],
+  "build": {
+    "env": {
+      "IS_NOW": "true",
+      "API_URL": "@mozuku-api-url",
+      "OAUTH_URL": "@mozuku-oauth-url",
+      "CLIENT_ID": "@mozuku-client-id",
+      "CLIENT_SECRET": "@mozuku-client-secret"
+    }
+  }
+}
