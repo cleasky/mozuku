@@ -5,8 +5,7 @@ import { Post } from '../../models'
 import { DateTime } from '../../presenters'
 import { OGCard } from '../../containers'
 
-import Image from './image'
-import DummyAvatar from './dummy-avatar'
+import Files from './files'
 
 import * as styles from './post.css'
 import { AlbumFile } from '../../models'
@@ -19,6 +18,47 @@ import {
 
 import pictograph = require('pictograph')
 import config from '../../../config'
+import Avatar from '../../../components/avatar'
+
+const Body: React.FC<{
+  bodyNodes: Post['nodes']
+  className: string
+}> = ({ bodyNodes, className }) => {
+  return (
+    <div className={className}>
+      {bodyNodes.map((node, i) => {
+        switch (node.kind) {
+          case LinkKind:
+            return (
+              <a key={i} href={node.raw} target="_blank">
+                {(() => {
+                  try {
+                    return decodeURI(node.raw)
+                  } catch (_) {
+                    return node.raw
+                  }
+                })()}
+              </a>
+            )
+          case MentionKind:
+            return (
+              <span key={i} className={styles.bold}>
+                {node.raw}
+              </span>
+            )
+          case EmojiNameKind:
+            return (
+              <span key={i} title={node.raw}>
+                {pictograph.dic[node.value] || node.raw}
+              </span>
+            )
+          default:
+            return <React.Fragment key={i}>{node.raw}</React.Fragment>
+        }
+      })}
+    </div>
+  )
+}
 
 type PostProps = {
   post: Post
@@ -34,21 +74,9 @@ export default ({
   return useMemo(
     () => (
       <div className={styles.post}>
-        {author.avatarFile ? (
-          <picture className={styles.icon}>
-            {author.avatarFile.thumbnails.map(t => (
-              <source key={t.id} srcSet={t.url.href} type={t.mime} />
-            ))}
-            <img
-              className={styles.icon__img}
-              title={author.avatarFile.fileName}
-            />
-          </picture>
-        ) : (
-          <div className={styles.icon}>
-            <DummyAvatar name={author.name} className={styles.icon__img} />
-          </div>
-        )}
+        <div className={styles.icon}>
+          <Avatar account={post.author} className={styles.icon__img} />
+        </div>
         <div className={styles.head}>
           <span
             className={[
@@ -74,40 +102,9 @@ export default ({
             </a>
           </div>
         </div>
-        <div className={styles.body}>
-          {post.nodes.map((node, i) => {
-            switch (node.kind) {
-              case LinkKind:
-                return (
-                  <a key={i} href={node.raw} target="_blank">
-                    {(() => {
-                      try {
-                        return decodeURI(node.raw)
-                      } catch (_) {
-                        return node.raw
-                      }
-                    })()}
-                  </a>
-                )
-              case MentionKind:
-                return (
-                  <span key={i} className={styles.bold}>
-                    {node.raw}
-                  </span>
-                )
-              case EmojiNameKind:
-                return (
-                  <span key={i} title={node.raw}>
-                    {pictograph.dic[node.value] || node.raw}
-                  </span>
-                )
-              default:
-                return <React.Fragment key={i}>{node.raw}</React.Fragment>
-            }
-          })}
-        </div>
+        <Body bodyNodes={post.nodes} className={styles.body} />
         {0 < post.files.length && (
-          <Image albumFiles={post.files} setModalContent={setModalContent} />
+          <Files albumFiles={post.files} setModalContent={setModalContent} />
         )}
         {post.nodes.map((node, i) => {
           switch (node.kind) {
