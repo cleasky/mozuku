@@ -103,7 +103,7 @@ export const useOGP = (href: string) => {
         return setResult(clawlCaches.get(href))
       }
       const ricapitolare = await axios.get(
-        `https://ricapitolare.now.sh/fetch?uri=${href}`
+        `https://ricapitolare.now.sh/?uri=${href}`
       )
       const r = ricapitolare.data
       // あり得ないので無視

@@ -20,6 +20,7 @@
     "env": {
       "IS_NOW": "true",
       "API_URL": "@mozuku-api-url",
+      "SEA_URL": "@mozuku-sea-url",
       "OAUTH_URL": "@mozuku-oauth-url",
       "CLIENT_ID": "@mozuku-client-id",
       "CLIENT_SECRET": "@mozuku-client-secret"
