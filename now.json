@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "mozuku",
   "builds": [
     {
       "src": "package.json",
