@@ -16,7 +16,9 @@ export default ({
     <blockquote className={[styles.ogcard, className].join(' ')}>
       <a href={url} rel="noopener noreferrer" target="_target">
         <div className={styles.title}>{title}</div>
-        <div className={styles.description}>{description}</div>
+        <div className={styles.description}>
+          {description?.replace(title, '').trim()}
+        </div>
       </a>
     </blockquote>
   )
