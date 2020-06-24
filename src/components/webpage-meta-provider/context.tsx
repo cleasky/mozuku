@@ -12,8 +12,8 @@ const defaultValue: WebpageMetaContext = {
     if (clawlCaches.has(href)) {
       return clawlCaches.get(href)
     }
-    const r = await axios.get(`https://ricapitolare.now.sh`, {
-      params: { uri: href }
+    const r = await axios.get(`https://ricapitolare.vercel.app`, {
+      params: { url: href }
     })
     // あり得ないので無視
     if (Array.isArray(r.data)) return
