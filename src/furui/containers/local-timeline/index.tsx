@@ -35,7 +35,9 @@ export default () => {
     if (!inReplyTo) return
     const post = appStore.posts.get(inReplyTo)
     if (!post) {
-      console.error(`replayToPost can not shown, failed to get post: ${inReplyTo}`)
+      console.error(
+        `replayToPost can not shown, failed to get post: ${inReplyTo}`
+      )
     }
     setReplyToPost(post)
   }, [inReplyTo])
